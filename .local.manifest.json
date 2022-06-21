@@ -1,0 +1,263 @@
+{
+  "instanceDetails": {
+    "instance": "Avagate",
+    "parentMID": "534001218",
+    "activeMID": "534001218"
+  },
+  "contentBuilder": {
+    "folders": [
+      {
+        "id": 103522,
+        "name": "Basetime Preference Center",
+        "parentId": 35088,
+        "categoryType": "asset",
+        "rootFolder": false,
+        "folderPath": "Content Builder/Basetime Preference Center"
+      },
+      {
+        "id": 103523,
+        "name": "backend",
+        "parentId": 103522,
+        "categoryType": "asset",
+        "rootFolder": false,
+        "folderPath": "Content Builder/Basetime Preference Center/backend"
+      },
+      {
+        "id": 103524,
+        "name": "configurations",
+        "parentId": 103522,
+        "categoryType": "asset",
+        "rootFolder": false,
+        "folderPath": "Content Builder/Basetime Preference Center/configurations"
+      },
+      {
+        "id": 103525,
+        "name": "frontend",
+        "parentId": 103522,
+        "categoryType": "asset",
+        "rootFolder": false,
+        "folderPath": "Content Builder/Basetime Preference Center/frontend"
+      },
+      {
+        "id": 103526,
+        "name": "components",
+        "parentId": 103525,
+        "categoryType": "asset",
+        "rootFolder": false,
+        "folderPath": "Content Builder/Basetime Preference Center/frontend/components"
+      }
+    ],
+    "assets": [
+      {
+        "id": 106368,
+        "bldrId": "db66204f-ea6b-495c-9680-1412d99111a5",
+        "name": "index",
+        "customerKey": "a448dc4e-1fde-41ca-bb6b-216ebb375e44",
+        "assetType": {
+          "id": 205,
+          "name": "webpage",
+          "displayName": "Web Page"
+        },
+        "category": {
+          "id": 35088,
+          "name": "Content Builder",
+          "parentId": 0,
+          "folderPath": "Content Builder"
+        },
+        "meta": {
+          "globalStyles": {
+            "isLocked": false,
+            "body": {
+              "max-width": "1280px"
+            }
+          }
+        },
+        "views": {
+          "html": {
+            "thumbnail": {},
+            "content": "<!DOCTYPE html>\n<html>\n\n<head>\n\n  <script src=\"https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js\"></script>\n  <script src=\"https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js\"></script>\n\n  <!-- Axios API - https://www.npmjs.com/package/axios -->\n  <script src=\"https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js\"></script>\n\n  <!-- Toast Notifications - https://www.npmjs.com/package/vue-toast-notification -->\n  <script src=\"https://cdn.jsdelivr.net/npm/vue-toast-notification@0.6\"></script>\n  <link href=\"https://cdn.jsdelivr.net/npm/vue-toast-notification/@0.6/dist/theme-sugar.css\" rel=\"stylesheet\">\n\n  <link href=\"https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900\" rel=\"stylesheet\">\n  <link href=\"https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css\" rel=\"stylesheet\">\n  <link href=\"https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css\" rel=\"stylesheet\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\">\n</head>\n\n<body>\n  <div id=\"app\">\n    %%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_html'))=%\n  </div>\n\n\n  %%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\_component_imports'))=%%\n\n</body>\n\n</html>",
+            "meta": {},
+            "slots": {
+              "col1": {
+                "design": "<p style=\"font-family:arial;color:#ccc;font-size:11px;text-align:center;vertical-align:middle;font-weight:bold;padding:10px;margin:0;border:#ccc dashed 1px;\">Drop blocks or content here</p>",
+                "modelVersion": 2
+              }
+            },
+            "modelVersion": 2
+          }
+        }
+      },
+      {
+        "id": 106396,
+        "bldrId": "99d7d8c9-ce45-459f-be65-3a06d17b4ff2",
+        "name": "backend_api",
+        "customerKey": "1fcee7d2-3998-4d17-87e2-b487abf3bb65",
+        "assetType": {
+          "id": 240,
+          "name": "jscoderesource",
+          "displayName": "Javascript Code Resource"
+        },
+        "category": {
+          "id": 35088,
+          "name": "Content Builder",
+          "parentId": 0,
+          "folderPath": "Content Builder"
+        },
+        "content": "%%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\backend\\processing_api'))=%%"
+      },
+      {
+        "bldrId": "80ac8653-d583-4703-864f-7da3aabb5a95",
+        "name": "functions",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103523,
+          "name": "backend",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/backend/functions.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load('core', '1.1')\n\n  \n</script>",
+        "id": 106442,
+        "customerKey": "860f3a3e-8bc9-448c-aa99-4b1c9e60c09b"
+      },
+      {
+        "bldrId": "2fe40cda-6677-4fb2-87e5-d7f41ecdfda2",
+        "name": "processing_api",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103523,
+          "name": "backend",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/backend/processing_api.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load(\"core\", \"1.1.1\");\n  Platform.Response.SetResponseHeader(\"Access-Control-Allow-Origin\", \"*\");\n  Platform.Response.SetResponseHeader('Strict-Transport-Security', 'max-age=200');\n  Platform.Response.SetResponseHeader('X-XSS-Protection', '1; mode=block');\n  Platform.Response.SetResponseHeader('X-Frame-Options', 'Deny');\n  Platform.Response.SetResponseHeader('X-Content-Type-Options', 'nosniff');\n  Platform.Response.SetResponseHeader('Referrer-Policy', 'strict-origin-when-cross-origin');\n  Platform.Response.SetResponseHeader('Content-Security-Policy', \"default-src 'self'\");\n\n\n  var postData = Platform.Request.GetPostData();\n  var postJSON = Platform.Function.ParseJSON(postData);\n\n  var action = Platform.Request.GetQueryStringParameter('action');\n  var payload = Platform.Request.GetQueryStringParameter('payload');\n\n  var res = ''\n\n  //Begin API Control Block\n  //Run specific set of code/functions based on the 'action' parameter\n  //After code is finished, the 'response' function returns the output and 'break' stops the processing\n  switch (action) {\n    case 'getPreferenceCenterOptions':\n      var optionBlock = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\preference_options');\n      var options = optionBlock.options();\n      Write(Stringify(options))\n    break;\n  };\n\n\n</script>",
+        "id": 106443,
+        "customerKey": "683f297b-7c48-47b1-97eb-e49d4892ec51"
+      },
+      {
+        "bldrId": "85397913-f5f6-4438-bd25-21df7b7e2589",
+        "name": "app_configuration",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103524,
+          "name": "configurations",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/configurations/app_configuration.html"
+        },
+        "content": "{\n  \"branding\": {\n    \"colors\": {\n      \"primary\": \"teal\",\n      \"secondary\": \"blue\",\n      \"accent\": \"yellow\"\n    }\n  },\n  \"channel_navigation_title\": \"Channel Preferences\",\n  \"channel_navigation_subtext\": \"Please select the appropriate channel to adjust preferences.\",\n  \"apiBaseURL\": \"https://cloud.emailmarketingunderstood.com/basetimepreferenceapi\"\n}",
+        "id": 106444,
+        "customerKey": "2b62872f-933c-4be4-a6d5-3e0cfb673ae3"
+      },
+      {
+        "bldrId": "823aad6c-f3cd-4350-a991-77c0c298e720",
+        "name": "app_html",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103525,
+          "name": "frontend",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/app_html.html"
+        },
+        "content": "<v-app>\n  <v-main>\n    <v-row>\n      <v-col\n        cols=\"12\"\n      >\n        <branding-bar :application-configuration=\"config\"></branding-bar>\n      </v-col>\n    </v-row>\n    <v-row>\n      <v-col>\n        <channel-drawer :application-configuration=\"config\" :preference-options=\"preferenceOptions\"></channel-drawer>\n      </v-col>\n      <v-col>\n        {{message}}\n      </v-col>\n    </v-row>\n  </v-main>\n</v-app>",
+        "id": 106445,
+        "customerKey": "1735a3a0-ecfc-452f-8df3-d1d2234324c3"
+      },
+      {
+        "bldrId": "13307142-cafd-41e6-9d50-03d27ac359fc",
+        "name": "app_js",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103525,
+          "name": "frontend",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/app_js.html"
+        },
+        "content": "new Vue({\n  el: '#app',\n  vuetify: new Vuetify(),\n  data () {\n    return {\n      debug: true,\n      config: applicationConfiguration,\n      preferenceOptions: preferenceOptions,\n      message: 'test message from vue'\n    }\n  },\n  mounted () {\n    this.debug && this.debugData();\n  },\n  methods: {\n    debugData() {\n      console.log({\n        config: this.config,\n        preferenceOptions: this.preferenceOptions\n      })\n    }\n  },\n  computed: {\n    apiBaseURL(){\n      return `${this.config.apiBaseURL}?action=`\n    }\n  }\n})",
+        "id": 106446,
+        "customerKey": "9d6e90b9-698b-4279-9c20-c69f6b9fe29e"
+      },
+      {
+        "bldrId": "5b757549-a3c2-4e17-9ffe-4b9502d02849",
+        "name": "_component_imports",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103526,
+          "name": "components",
+          "parentId": 103525,
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/_component_imports.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load(\"core\", \"1.1.1\");\n\n  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\app_configuration')\n  var preferenceOptions = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\preference_options')\n  \n  var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\components\\\\channel_drawer')\n  var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\components\\\\branding_bar')\n  var appJS = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\app_js')\n</script>\n\n%%=Concat('<sc','rip','t>')=%%\n\n  Vue.use(VueToast, {\n  position: 'top-right',\n  duration: 6000,\n  dismissable: true\n  });\n\n  var applicationConfiguration = <ctrl:var name=applicationConfiguration />\n  var preferenceOptions = <ctrl:var name=preferenceOptions />\n\n  <ctrl:var name=channelDrawer />\n  <ctrl:var name=brandingBar />\n  <ctrl:var name=appJS />\n\n  %%=Concat('</sc','rip','t>')=%%",
+        "id": 106447,
+        "customerKey": "1905a823-e046-472b-aecd-1794eba63433"
+      },
+      {
+        "bldrId": "f873c166-22f2-494f-914a-8eb1b311ebb6",
+        "name": "channel_drawer",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103526,
+          "name": "components",
+          "parentId": 103525,
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/channel_drawer.html"
+        },
+        "content": "/*\nWhat is this component?\n*/\nVue.component('channel-drawer', {\n  props: {\n    preferenceOptions: Object,\n    applicationConfiguration: Object\n  },\n  methods: {\n    getPreferenceChannels: function (preferenceOptions) {\n      return Object.keys(preferenceOptions)\n    },\n    getChannelIcon: function (channel, preferenceOptions) {\n      return preferenceOptions[channel]['icon']\n    }\n  },\n  data() {\n    return {\n      channels: this.getPreferenceChannels(preferenceOptions),\n      right: null,\n    }\n  },\n  template: `\n  <div>\n    <v-navigation-drawer \n      permanent\n      height=\"100vh\" \n      width=\"254\"\n    >\n      <v-list dense nav>\n        <v-list-item v-for=\"channel in channels\" :key=\"channel\" link>\n          <v-list-item-icon>\n            <v-icon\n              large\n              :color=\"applicationConfiguration.branding.colors.primary\"\n            >{{ getChannelIcon(channel, this.preferenceOptions) }}</v-icon>\n          </v-list-item-icon>\n\n          <v-list-item-content>\n            <v-list-item-title class=\"text-h6 mb-8\">{{ channel }}</v-list-item-title>\n          </v-list-item-content>\n        </v-list-item>\n      </v-list>\n    </v-navigation-drawer>\n</div>\n`\n})",
+        "id": 106793,
+        "customerKey": "91082bde-88de-4630-992e-b61172208ba0"
+      },
+      {
+        "bldrId": "bcd2217d-4c65-447f-9658-2f5ddf74df15",
+        "name": "preference_options",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103524,
+          "name": "configurations",
+          "parentId": 103522,
+          "folderPath": "Content Builder/Basetime Preference Center/configurations/preference_options.html"
+        },
+        "content": "{\n  \"email\": {\n    \"icon\": \"mdi-email\",\n    \"preferenceOptions\": {\n      \"unsubscribe\": {\n        \"label\": \"Unsubscribe\"\n      }\n    }\n  },\n  \"sms\": {\n    \"icon\": \"mdi-android-messages\",\n    \"preferenceOptions\": {\n      \"unsubscribe\": {\n        \"label\": \"Unsubscribe\"\n      }\n    }\n  }\n}",
+        "id": 106843,
+        "customerKey": "62a8a15e-13ca-4e40-9316-ccd2f75a84bc"
+      },
+      {
+        "bldrId": "aef47975-c115-4327-a052-7acc072f86b1",
+        "name": "branding_bar",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "id": 103526,
+          "name": "components",
+          "parentId": 103525,
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/branding_bar.html"
+        },
+        "content": "\n/* \nWhat is this component?\n*/\nVue.component('branding-bar', {\n  props: {\n    applicationConfiguration: Object\n  },\n  mounted() {\n\n  },\n  data() {\n    return {\n    \n    }\n  },\n  watch: {\n   \n  },\n  computed: {\n    \n  },\n  template: `\n    <div>\n      <v-card>\n        <v-app-bar\n          position=\"absolute\"\n          height=\"100\"\n          color=\"white\"\n        >\n          <v-app-bar-nav-icon></v-app-bar-nav-icon>\n    \n          <v-toolbar-title>Title</v-toolbar-title>\n    \n          <v-spacer></v-spacer>\n    \n          <v-btn icon>\n            <v-icon>mdi-magnify</v-icon>\n          </v-btn>\n    \n          <v-btn icon>\n            <v-icon>mdi-heart</v-icon>\n          </v-btn>\n    \n          <v-btn icon>\n            <v-icon>mdi-dots-vertical</v-icon>\n          </v-btn>\n        </v-app-bar>\n      </v-card>\n    </div> \n  `\n})\n     ",
+        "id": 106938,
+        "customerKey": "2e504d94-75b5-46e3-9b3c-1b0cb32d3be0"
+      }
+    ]
+  }
+}

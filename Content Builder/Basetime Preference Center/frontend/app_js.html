@@ -1,0 +1,28 @@
+new Vue({
+  el: '#app',
+  vuetify: new Vuetify(),
+  data () {
+    return {
+      debug: true,
+      config: applicationConfiguration,
+      preferenceOptions: preferenceOptions,
+      message: 'test message from vue'
+    }
+  },
+  mounted () {
+    this.debug && this.debugData();
+  },
+  methods: {
+    debugData() {
+      console.log({
+        config: this.config,
+        preferenceOptions: this.preferenceOptions
+      })
+    }
+  },
+  computed: {
+    apiBaseURL(){
+      return `${this.config.apiBaseURL}?action=`
+    }
+  }
+})

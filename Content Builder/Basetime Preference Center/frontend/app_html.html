@@ -1,0 +1,19 @@
+<v-app>
+  <v-main>
+    <v-row>
+      <v-col
+        cols="12"
+      >
+        <branding-bar :application-configuration="config"></branding-bar>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <channel-drawer :application-configuration="config" :preference-options="preferenceOptions"></channel-drawer>
+      </v-col>
+      <v-col>
+        {{message}}
+      </v-col>
+    </v-row>
+  </v-main>
+</v-app>

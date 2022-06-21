@@ -1,0 +1,68 @@
+[
+  {
+    "id": 106368,
+    "context": "contentBuilder",
+    "bldrId": "db66204f-ea6b-495c-9680-1412d99111a5",
+    "folderPath": "Content Builder/index.html"
+  },
+  {
+    "id": 106396,
+    "context": "contentBuilder",
+    "bldrId": "99d7d8c9-ce45-459f-be65-3a06d17b4ff2",
+    "folderPath": "Content Builder/backend_api.html"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/backend/functions.html",
+    "bldrId": "80ac8653-d583-4703-864f-7da3aabb5a95",
+    "id": 106442,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/backend/processing_api.html",
+    "bldrId": "2fe40cda-6677-4fb2-87e5-d7f41ecdfda2",
+    "id": 106443,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/app_configuration.html",
+    "bldrId": "85397913-f5f6-4438-bd25-21df7b7e2589",
+    "id": 106444,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/app_html.html",
+    "bldrId": "823aad6c-f3cd-4350-a991-77c0c298e720",
+    "id": 106445,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/app_js.html",
+    "bldrId": "13307142-cafd-41e6-9d50-03d27ac359fc",
+    "id": 106446,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/_component_imports.html",
+    "bldrId": "5b757549-a3c2-4e17-9ffe-4b9502d02849",
+    "id": 106447,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/channel_drawer.html",
+    "bldrId": "f873c166-22f2-494f-914a-8eb1b311ebb6",
+    "id": 106793,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/preference_options.html",
+    "bldrId": "bcd2217d-4c65-447f-9658-2f5ddf74df15",
+    "id": 106843,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/branding_bar.html",
+    "bldrId": "aef47975-c115-4327-a052-7acc072f86b1",
+    "id": 106938,
+    "context": "contentBuilder"
+  }
+]

@@ -1,0 +1,32 @@
+<script runat="server">
+  Platform.Load("core", "1.1.1");
+  Platform.Response.SetResponseHeader("Access-Control-Allow-Origin", "*");
+  Platform.Response.SetResponseHeader('Strict-Transport-Security', 'max-age=200');
+  Platform.Response.SetResponseHeader('X-XSS-Protection', '1; mode=block');
+  Platform.Response.SetResponseHeader('X-Frame-Options', 'Deny');
+  Platform.Response.SetResponseHeader('X-Content-Type-Options', 'nosniff');
+  Platform.Response.SetResponseHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  Platform.Response.SetResponseHeader('Content-Security-Policy', "default-src 'self'");
+
+
+  var postData = Platform.Request.GetPostData();
+  var postJSON = Platform.Function.ParseJSON(postData);
+
+  var action = Platform.Request.GetQueryStringParameter('action');
+  var payload = Platform.Request.GetQueryStringParameter('payload');
+
+  var res = ''
+
+  //Begin API Control Block
+  //Run specific set of code/functions based on the 'action' parameter
+  //After code is finished, the 'response' function returns the output and 'break' stops the processing
+  switch (action) {
+    case 'getPreferenceCenterOptions':
+      var optionBlock = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\preference_options');
+      var options = optionBlock.options();
+      Write(Stringify(options))
+    break;
+  };
+
+
+</script>

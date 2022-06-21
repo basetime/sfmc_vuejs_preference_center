@@ -1,0 +1,27 @@
+<script runat="server">
+  Platform.Load("core", "1.1.1");
+
+  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
+  var preferenceOptions = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\preference_options')
+  
+  var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\channel_drawer')
+  var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\branding_bar')
+  var appJS = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_js')
+</script>
+
+%%=Concat('<sc','rip','t>')=%%
+
+  Vue.use(VueToast, {
+  position: 'top-right',
+  duration: 6000,
+  dismissable: true
+  });
+
+  var applicationConfiguration = <ctrl:var name=applicationConfiguration />
+  var preferenceOptions = <ctrl:var name=preferenceOptions />
+
+  <ctrl:var name=channelDrawer />
+  <ctrl:var name=brandingBar />
+  <ctrl:var name=appJS />
+
+  %%=Concat('</sc','rip','t>')=%%
