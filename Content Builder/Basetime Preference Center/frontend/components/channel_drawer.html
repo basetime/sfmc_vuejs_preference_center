@@ -4,7 +4,7 @@ What is this component?
 Vue.component('channel-drawer', {
   props: {
     preferenceOptions: Object,
-    applicationConfiguration: Object
+    branding: Object
   },
   methods: {
     getPreferenceChannels: function (preferenceOptions) {
@@ -24,15 +24,15 @@ Vue.component('channel-drawer', {
   <div>
     <v-navigation-drawer 
       permanent
-      height="100vh" 
-      width="254"
+      max-height="100vh"
+      height="80vh"
     >
       <v-list dense nav>
-        <v-list-item v-for="channel in channels" :key="channel" link>
+        <v-list-item v-for="channel in channels" :key="channel"  @click="$emit('update-channel-selection', channel)" link>
           <v-list-item-icon>
             <v-icon
               large
-              :color="applicationConfiguration.branding.colors.primary"
+              :color="branding.colors.accent"
             >{{ getChannelIcon(channel, this.preferenceOptions) }}</v-icon>
           </v-list-item-icon>
 

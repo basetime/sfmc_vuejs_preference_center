@@ -1,11 +1,13 @@
 new Vue({
   el: '#app',
   vuetify: new Vuetify(),
-  data () {
+  data () { 
     return {
+      darkMode: false,
       debug: true,
-      config: applicationConfiguration,
-      preferenceOptions: preferenceOptions,
+      applicationConfiguration,
+      preferenceOptions,
+      channelSelection: '',
       message: 'test message from vue'
     }
   },
@@ -15,14 +17,28 @@ new Vue({
   methods: {
     debugData() {
       console.log({
-        config: this.config,
+        config: this.applicationConfiguration,
         preferenceOptions: this.preferenceOptions
       })
+    },
+    onUpdateDarkMode() {
+      this.darkMode = !this.darkMode
+    },
+    onUpdateChannelSelection($event) {
+      console.log($event)
+      this.channelSelection = $event
     }
   },
   computed: {
     apiBaseURL(){
-      return `${this.config.apiBaseURL}?action=`
+      return `${this.applicationConfiguration.apiBaseURL}?action=`
+    },
+    branding(){
+      if(this.applicationConfiguration.branding.supportDarkMode && this.darkMode){
+        return this.applicationConfiguration.branding.dark
+      }
+
+      return this.applicationConfiguration.branding.default
     }
   }
 })

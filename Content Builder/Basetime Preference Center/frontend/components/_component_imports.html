@@ -5,6 +5,7 @@
   var preferenceOptions = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\preference_options')
   
   var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\channel_drawer')
+  var preferenceForm = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\preference_form')
   var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\branding_bar')
   var appJS = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_js')
 </script>
@@ -17,10 +18,13 @@
   dismissable: true
   });
 
+  Vue.use(VueFormulate)
+
   var applicationConfiguration = <ctrl:var name=applicationConfiguration />
   var preferenceOptions = <ctrl:var name=preferenceOptions />
 
   <ctrl:var name=channelDrawer />
+  <ctrl:var name=preferenceForm />
   <ctrl:var name=brandingBar />
   <ctrl:var name=appJS />
 

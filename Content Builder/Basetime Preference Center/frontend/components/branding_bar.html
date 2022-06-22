@@ -1,53 +1,50 @@
-
-/* 
+/*
 What is this component?
 */
 Vue.component('branding-bar', {
-  props: {
-    applicationConfiguration: Object
-  },
-  mounted() {
+props: {
+branding: Object
+},
+mounted() {
 
-  },
-  data() {
-    return {
-    
-    }
-  },
-  watch: {
-   
-  },
-  computed: {
-    
-  },
-  template: `
-    <div>
-      <v-card>
-        <v-app-bar
-          position="absolute"
-          height="100"
-          color="white"
-        >
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
-    
-          <v-toolbar-title>Title</v-toolbar-title>
-    
-          <v-spacer></v-spacer>
-    
-          <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-    
-          <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-    
-          <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </v-app-bar>
-      </v-card>
-    </div> 
-  `
+},
+data() {
+return {
+darkModeToggle: false
+}
+},
+watch: {
+
+},
+methods: {
+
+},
+template: `
+<div>
+  <v-card>
+    <v-app-bar :color="branding.colors.paper" position="absolute" height="100">
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+
+      <v-toolbar-title>
+        <v-img :src="branding.logo"></v-img>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+
+      <v-switch :color="branding.colors.accent" @click="$emit('update-dark-mode')" v-model="darkModeToggle">
+        <template v-slot:label>
+          <v-icon v-if="darkModeToggle" large color="#F5F5F5">
+            mdi-moon-waxing-crescent
+          </v-icon>
+          <v-icon v-else large color="#616161">
+            mdi-white-balance-sunny
+          </v-icon>
+        </template>
+      </v-switch>
+
+    </v-app-bar>
+  </v-card>
+</div>
+`
 })
-     

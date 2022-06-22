@@ -1,18 +1,24 @@
 <v-app>
   <v-main>
-    <v-row>
+    <v-row
+      overflow="hidden"
+    >
       <v-col
         cols="12"
       >
-        <branding-bar :application-configuration="config"></branding-bar>
+        <branding-bar @update-dark-mode="onUpdateDarkMode" :dark-mode="darkMode" :branding="branding"></branding-bar>
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <channel-drawer :application-configuration="config" :preference-options="preferenceOptions"></channel-drawer>
+      <v-col
+        cols="2"
+      >
+        <channel-drawer @update-channel-selection="onUpdateChannelSelection" :branding="branding" :preference-options="preferenceOptions"></channel-drawer>
       </v-col>
-      <v-col>
-        {{message}}
+      <v-col
+        cols="10"
+      >
+        <preference-form :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection"></preference-form>
       </v-col>
     </v-row>
   </v-main>
