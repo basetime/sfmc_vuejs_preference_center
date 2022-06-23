@@ -15,18 +15,27 @@
   var action = Platform.Request.GetQueryStringParameter('action');
   var payload = Platform.Request.GetQueryStringParameter('payload');
 
+  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
+  var wsProxy = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\wsProxy')
+  var wsFn = wsProxy.init()
   var res = ''
-
+ 
+  try {
   //Begin API Control Block
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
-    case 'getPreferenceCenterOptions':
-      var optionBlock = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\preference_options');
-      var options = optionBlock.options();
-      Write(Stringify(options))
+    case 'submitPreferenceForm':
+      
+      var preferenceDEExternalKey = applicationConfiguration.preferenceCenterDataExtensionExternalKey;
+      var preferenceDE = DataExtension.Init(preferenceDEExternalKey);
+
+      Write(Stringify(preferenceDE))
     break;
   };
 
+}catch(err){
+  Write(Stringify(err))
+}
 
 </script>

@@ -1,32 +1,114 @@
 {
-  "email": {
-    "icon": "mdi-email",
-    "headline": "Update Email Preferences",
-    "copy": "Please select your email preferences below",
-    "preferences": [
+  "profile": {
+    "headline": "Update your profile",
+    "copy": "",
+    "inputs": [
       {
-        "field": "unsubscribe",
-        "label": "Unsubscribe"
+        "type": "text",
+        "label": "First Name",
+        "name": "firstName"
       },
       {
-        "field": "onceAWeek",
-        "label": "Once A Week"
+        "type": "text",
+        "label": "Last Name",
+        "name": "lastName"
       },
       {
-        "field": "holidays",
-        "label": "Holidays Only"
+        "type": "text",
+        "label": "Email Address",
+        "name": "emailAddress"
       }
-    ]
+    ],
+    "checkboxes": []
   },
-  "sms": {
-    "icon": "mdi-android-messages",
-    "headline": "Update SMS Preferences",
-    "copy": "Please select your SMS preferences below",
-    "preferences": [
-      {
-        "field": "unsubscribe",
-        "label": "Unsubscribe"
+  "channels": {
+    "email": {
+      "icon": "mdi-email",
+      "preferences": {
+        "headline": "Email Preferences",
+        "copy": "Please select your email preferences below",
+        "radios": [
+          {
+            "value": "onceAWeek",
+            "label": "Once A Week"
+          },
+          {
+            "value": "holidays",
+            "label": "Holidays Only"
+          },
+          {
+            "value": "specialEvents",
+            "label": "Special Events Only"
+          },
+          {
+            "value": "unsubscribe",
+            "label": "Unsubscribe Me From All Emails"
+          }
+        ]
+      },
+      "subscriptions": {
+        "headline": "Email Subscriptions",
+        "copy": "Please select your email subscriptions below",
+        "inputs": [],
+        "checkboxes": [
+          {
+            "value": "dailyNewsletter",
+            "label": "Daily Newsletter"
+          },
+          {
+            "value": "devChat",
+            "label": "Developer Chat"
+          },
+          {
+            "value": "devOps",
+            "label": "Developer Ops Weekly"
+          }
+        ]
       }
-    ]
+    },
+    "sms": {
+      "icon": "mdi-android-messages",
+      "preferences": {
+        "headline": "SMS Preferences",
+        "copy": "Please select your text message preferences below",
+        "radios": [
+          {
+            "value": "onceAWeek",
+            "label": "Once A Week"
+          },
+          {
+            "value": "holidays",
+            "label": "Holidays Only"
+          },
+          {
+            "value": "specialEvents",
+            "label": "Special Events Only"
+          },
+          {
+            "value": "unsubscribe",
+            "label": "Unsubscribe Me From All Emails"
+          }
+        ]
+      },
+      "subscriptions": {
+        "headline": "SMS Subscriptions",
+        "copy": "Please select your text message subscriptions below",
+        "inputs": [],
+        "checkboxes": [
+          {
+            "value": "dailyNewsletter",
+            "label": "Daily Newsletter"
+          },
+          {
+            "value": "devChat",
+            "label": "Developer Chat"
+          },
+          {
+            "value": "devOps",
+            "label": "Developer Ops Weekly"
+          }
+        ]
+      }
+    }
   }
 }

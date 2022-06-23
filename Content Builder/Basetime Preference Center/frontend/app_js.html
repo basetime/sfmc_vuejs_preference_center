@@ -7,8 +7,12 @@ new Vue({
       debug: true,
       applicationConfiguration,
       preferenceOptions,
-      channelSelection: '',
-      message: 'test message from vue'
+      channelSelection: null,
+      formSubmitting: false,
+      subscriber: {
+        subscriberId: '12345',
+        emailAddress: 'tony.zupancic@gmail.com'
+      }
     }
   },
   mounted () {
@@ -25,8 +29,22 @@ new Vue({
       this.darkMode = !this.darkMode
     },
     onUpdateChannelSelection($event) {
-      console.log($event)
       this.channelSelection = $event
+    },
+    async onSubmitPreferenceForm($event) {
+      try {
+
+        const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
+          subscriber: this.subscriber,
+          channel: this.channelSelection,
+          formInputs: $event
+        })
+        
+        console.log(submitRequest)
+
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   computed: {

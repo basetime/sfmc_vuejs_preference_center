@@ -5,69 +5,137 @@ Vue.component('preference-form', {
   props: {
     branding: Object,
     preferenceOptions: Object,
-    channelSelection: String
-  },
-  mounted() {
-
+    channelSelection: String,
+    formSubmitting: Boolean
   },
   data() {
     return {
-     values: {}
+      formInputs: {
+        profile: {},
+        preferences: {},
+        subscriptions: {}
+      }
     }
   },
-  watch: {
-
+  methods: {
+    submitPreferenceForm(){
+      this.$emit('submit-preference-form', this.formInputs)
+    }
   },
   computed: {
-    preferenceChoices() {
+    preferenceChannelConfiguration() {
       if (this.channelSelection) {
-        return this.preferenceOptions[this.channelSelection]['preferences']
+        return this.preferenceOptions['channels'][this.channelSelection]
       }
+    },
+    profileFormSchema() {
+      let profileSchema = [
+        {
+          "component": "h2",
+          "children": `${this.preferenceOptions['profile']['headline']}`
+        },
+        {
+          "component": "p",
+          "children": `${this.preferenceOptions['profile']['copy']}`
+        }
+      ]
+
+      if (
+        Object.prototype.hasOwnProperty.call(this.preferenceOptions.profile, 'inputs')
+      ) {
+        profileSchema.push(...this.preferenceOptions.profile.inputs)
+      }
+
+      return profileSchema
     },
     preferenceFormSchema() {
       let preferenceSchema = [
         {
           "component": "h2",
-          "children": `${this.preferenceOptions[this.channelSelection]['headline']}`
+          "children": `${this.preferenceChannelConfiguration['preferences']['headline']}`
         },
         {
           "component": "p",
-          "children": `${this.preferenceOptions[this.channelSelection]['copy']}`
-        },
-        {
-          "label": "Email Address",
-          "name": "email"
-        },
-        {
-          "component": "v-col",
-          "class": "d-flex",
-          "children": [
-            {
-              "name": "preferenceChoice",
-              "type": "radio",
-              "class": "mr-16",
-              "options": this.preferenceChoices.map(pref => {return { value: pref.field, label: pref.label}})
-            }
-          ]
-        },
-        {
-          "type": "submit"
+          "children": `${this.preferenceChannelConfiguration['preferences']['copy']}`
         }
       ]
 
+      if (
+        Object.prototype.hasOwnProperty.call(this.preferenceChannelConfiguration['preferences'], 'radios')
+      ) {
+        preferenceSchema.push({
+          "name": "preference",
+          "type": "radio",
+          "options": this.preferenceChannelConfiguration['preferences']['radios']
+        })
+      }
+
       return preferenceSchema
+    },
+    subscriptionFormSchema() {
+      let subscriptionSchema = [
+        {
+          "component": "h2",
+          "children": `${this.preferenceChannelConfiguration['subscriptions']['headline']}`
+        },
+        {
+          "component": "p",
+          "children": `${this.preferenceChannelConfiguration['subscriptions']['copy']}`
+        }
+      ]
+
+      if (
+        Object.prototype.hasOwnProperty.call(this.preferenceChannelConfiguration['subscriptions'], 'checkboxes')
+      ) {
+        subscriptionSchema.push({
+          "name": "subscriptions",
+          "type": "checkbox",
+          "options": this.preferenceChannelConfiguration['subscriptions']['checkboxes']
+        })
+      }
+
+      return subscriptionSchema
     }
   },
   template: `
 <section>
   <v-row class="flex">
-    <v-col cols="8" class="justify-center">
-      <div v-if="channelSelection">
-        <formulate-form
-          v-model="values"
-          :schema="preferenceFormSchema"
-        />
+    <v-col cols="12" class="justify-center">
+      <div v-if="preferenceOptions.profile.inputs">
+        <formulate-form v-model="formInputs.profile" :schema="profileFormSchema" />
       </div>
+    </v-col>
+  </v-row>
+
+  <v-row>
+    <v-col cols="12" md="8">
+      <v-divider class="my-5"></v-divider>
+    </v-col>
+  </v-row>
+
+  <v-row class="flex">
+    <v-col cols="12" md="4" class="mb-xs-4 mb-md-0">
+      <div v-if="channelSelection">
+        <formulate-form v-model="formInputs.preferences" :schema="preferenceFormSchema" />
+      </div>
+    </v-col>
+    <v-col cols="12" md="4">
+      <div v-if="channelSelection">
+        <formulate-form v-model="formInputs.subscriptions" :schema="subscriptionFormSchema" />
+      </div>
+    </v-col>
+  </v-row>
+
+  <v-row>
+    <v-col cols="12" md="8">
+      <v-btn class="ma-2" :loading="formSubmitting" :disabled="formSubmitting" color="info" @click="submitPreferenceForm">
+        Submit Updates
+        <template v-slot:loader>
+          <span class="custom-loader">
+            <v-icon light>mdi-cached</v-icon>
+          </span>
+        </template>
+      </v-btn>
     </v-col>
   </v-row>
 </section>

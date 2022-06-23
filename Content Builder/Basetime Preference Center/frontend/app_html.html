@@ -18,7 +18,7 @@
       <v-col
         cols="10"
       >
-        <preference-form :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection"></preference-form>
+        <preference-form @submit-preference-form="onSubmitPreferenceForm" :form-submitting="formSubmitting" :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection"></preference-form>
       </v-col>
     </v-row>
   </v-main>
