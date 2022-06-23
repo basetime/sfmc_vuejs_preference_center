@@ -1,0 +1,226 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "repositoryUrl": "",
+  "contentBuilder": {
+    "folders": [
+      {
+        "folderPath": "Content Builder/Basetime Preference Center"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/backend"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/configurations"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/frontend"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/frontend/components"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/frontend/styles"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/lib"
+      },
+      {
+        "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs"
+      }
+    ],
+    "assets": [
+      {
+        "bldrId": "db66204f-ea6b-495c-9680-1412d99111a5",
+        "name": "index",
+        "assetType": {
+          "id": 205,
+          "name": "webpage",
+          "displayName": "Web Page"
+        },
+        "category": {
+          "folderPath": "Content Builder"
+        },
+        "meta": {
+          "globalStyles": {
+            "isLocked": false,
+            "body": {
+              "max-width": "1280px"
+            }
+          }
+        },
+        "views": {
+          "html": {
+            "thumbnail": {},
+            "content": "<!DOCTYPE html>\n<html>\n\n<head>\n\n  <script src=\"https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js\"></script>\n  <script src=\"https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js\"></script>\n\n  <!-- Axios API - https://www.npmjs.com/package/axios -->\n  <script src=\"https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js\"></script>\n\n  <!-- Toast Notifications - https://www.npmjs.com/package/vue-toast-notification -->\n  <script src=\"https://cdn.jsdelivr.net/npm/vue-toast-notification@0.6\"></script>\n  <link href=\"https://cdn.jsdelivr.net/npm/vue-toast-notification/@0.6/dist/theme-sugar.css\" rel=\"stylesheet\">\n\n  \n  <script src=\"https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.5.3/dist/formulate.min.js\"></script>\n  <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.5.3/dist/snow.css\">\n\n  <link href=\"https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900\" rel=\"stylesheet\">\n  <link href=\"https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css\" rel=\"stylesheet\">\n  <link href=\"https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css\" rel=\"stylesheet\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\">\n</head>\n\n<body>\n  <div id=\"app\">\n    %%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_html'))=%%\n  </div>\n\n\n  %%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\_component_imports'))=%%\n\n</body>\n\n</html>",
+            "meta": {},
+            "slots": {
+              "col1": {
+                "design": "<p style=\"font-family:arial;color:#ccc;font-size:11px;text-align:center;vertical-align:middle;font-weight:bold;padding:10px;margin:0;border:#ccc dashed 1px;\">Drop blocks or content here</p>",
+                "modelVersion": 2
+              }
+            },
+            "modelVersion": 2
+          }
+        }
+      },
+      {
+        "bldrId": "99d7d8c9-ce45-459f-be65-3a06d17b4ff2",
+        "name": "backend_api",
+        "assetType": {
+          "id": 240,
+          "name": "jscoderesource",
+          "displayName": "Javascript Code Resource"
+        },
+        "category": {
+          "folderPath": "Content Builder"
+        },
+        "content": "%%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\backend\\processing_api'))=%%"
+      },
+      {
+        "bldrId": "80ac8653-d583-4703-864f-7da3aabb5a95",
+        "name": "functions",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/backend/functions.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load('core', '1.1')\n\n  \n</script>"
+      },
+      {
+        "bldrId": "2fe40cda-6677-4fb2-87e5-d7f41ecdfda2",
+        "name": "processing_api",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/backend/processing_api.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load(\"core\", \"1.1.1\");\n  Platform.Response.SetResponseHeader(\"Access-Control-Allow-Origin\", \"*\");\n  Platform.Response.SetResponseHeader('Strict-Transport-Security', 'max-age=200');\n  Platform.Response.SetResponseHeader('X-XSS-Protection', '1; mode=block');\n  Platform.Response.SetResponseHeader('X-Frame-Options', 'Deny');\n  Platform.Response.SetResponseHeader('X-Content-Type-Options', 'nosniff');\n  Platform.Response.SetResponseHeader('Referrer-Policy', 'strict-origin-when-cross-origin');\n  Platform.Response.SetResponseHeader('Content-Security-Policy', \"default-src 'self'\");\n\n\n  var postData = Platform.Request.GetPostData();\n  var postJSON = Platform.Function.ParseJSON(postData);\n\n  var action = Platform.Request.GetQueryStringParameter('action');\n  var payload = Platform.Request.GetQueryStringParameter('payload');\n\n  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\app_configuration')\n  var wsProxy = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\lib\\\\ssjs\\\\wsProxy')\n  var wsFn = wsProxy.init()\n  var res = ''\n \n  try {\n  //Begin API Control Block\n  //Run specific set of code/functions based on the 'action' parameter\n  //After code is finished, the 'response' function returns the output and 'break' stops the processing\n  switch (action) {\n    case 'submitPreferenceForm':\n      \n      var preferenceDEExternalKey = applicationConfiguration.preferenceCenterDataExtensionExternalKey;\n      var preferenceDE = DataExtension.Init(preferenceDEExternalKey);\n\n      Write(Stringify(preferenceDE))\n    break;\n  };\n\n}catch(err){\n  Write(Stringify(err))\n}\n\n</script>"
+      },
+      {
+        "bldrId": "85397913-f5f6-4438-bd25-21df7b7e2589",
+        "name": "app_configuration",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/configurations/app_configuration.html"
+        },
+        "content": "{\n  \"branding\": {\n    \"brandName\": \"Basetime\",\n    \"websiteURL\": \"https://basetime.io\",\n    \"supportDarkMode\": true,\n    \"default\": {\n      \"logo\": \"https://avagate.com/img/Avagate-Logo-White.svg\",\n      \"colors\": {\n        \"primary\": \"#00FFFF\",\n        \"secondary\": \"blue\",\n        \"accent\": \"yellow\",\n        \"paper\": \"#173463\"\n      }\n    },\n    \"dark\": {\n      \"logo\": \"https://basetime.io/basetime-developer-network-logo.svg\",\n      \"colors\": {\n        \"primary\": \"#aadeeb\",\n        \"secondary\": \"#0098bc\",\n        \"accent\": \"#fc6833\",\n        \"paper\": \"#0f1d20\"\n      }\n    }\n  },\n  \"apiBaseURL\": \"https://cloud.emailmarketingunderstood.com/basetimepreferenceapi\",\n  \"subscriberDataExtensionExternalKey\": \"\",\n  \"preferenceCenterDataExtensionExternalKey\": \"A89D62BA-3F5F-400C-B0E9-979FD11948EF\"\n}"
+      },
+      {
+        "bldrId": "823aad6c-f3cd-4350-a991-77c0c298e720",
+        "name": "app_html",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/app_html.html"
+        },
+        "content": "<v-app>\n  <v-main>\n    <v-row\n      overflow=\"hidden\"\n    >\n      <v-col\n        cols=\"12\"\n      >\n        <branding-bar @update-dark-mode=\"onUpdateDarkMode\" :dark-mode=\"darkMode\" :branding=\"branding\"></branding-bar>\n      </v-col>\n    </v-row>\n    <v-row>\n      <v-col\n        cols=\"2\"\n      >\n        <channel-drawer @update-channel-selection=\"onUpdateChannelSelection\" :branding=\"branding\" :preference-options=\"preferenceOptions\"></channel-drawer>\n      </v-col>\n      <v-col\n        cols=\"10\"\n      >\n        <preference-form @submit-preference-form=\"onSubmitPreferenceForm\" :form-submitting=\"formSubmitting\" :branding=\"branding\" :preference-options=\"preferenceOptions\" :channel-selection=\"channelSelection\"></preference-form>\n      </v-col>\n    </v-row>\n  </v-main>\n</v-app>"
+      },
+      {
+        "bldrId": "13307142-cafd-41e6-9d50-03d27ac359fc",
+        "name": "app_js",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/app_js.html"
+        },
+        "content": "new Vue({\n  el: '#app',\n  vuetify: new Vuetify(),\n  data () { \n    return {\n      darkMode: false,\n      debug: true,\n      applicationConfiguration,\n      preferenceOptions,\n      channelSelection: null,\n      formSubmitting: false,\n      subscriber: {\n        subscriberId: '12345',\n        emailAddress: 'tony.zupancic@gmail.com'\n      }\n    }\n  },\n  mounted () {\n    this.debug && this.debugData();\n  },\n  methods: {\n    debugData() {\n      console.log({\n        config: this.applicationConfiguration,\n        preferenceOptions: this.preferenceOptions\n      })\n    },\n    onUpdateDarkMode() {\n      this.darkMode = !this.darkMode\n    },\n    onUpdateChannelSelection($event) {\n      this.channelSelection = $event\n    },\n    async onSubmitPreferenceForm($event) {\n      try {\n\n        const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {\n          subscriber: this.subscriber,\n          channel: this.channelSelection,\n          formInputs: $event\n        })\n        \n        console.log(submitRequest)\n\n      } catch (err) {\n        console.log(err)\n      }\n    }\n  },\n  computed: {\n    apiBaseURL(){\n      return `${this.applicationConfiguration.apiBaseURL}?action=`\n    },\n    branding(){\n      if(this.applicationConfiguration.branding.supportDarkMode && this.darkMode){\n        return this.applicationConfiguration.branding.dark\n      }\n\n      return this.applicationConfiguration.branding.default\n    }\n  }\n})"
+      },
+      {
+        "bldrId": "5b757549-a3c2-4e17-9ffe-4b9502d02849",
+        "name": "_component_imports",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/_component_imports.html"
+        },
+        "content": "%%=TreatAsContent(ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\styles\\submit_button_animation'))=%%\n\n\n<script runat=\"server\">\n  Platform.Load(\"core\", \"1.1.1\");\n\n  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\app_configuration')\n  var preferenceOptions = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\configurations\\\\preference_options')\n  \n  var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\components\\\\channel_drawer')\n  var preferenceForm = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\components\\\\preference_form')\n  var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\components\\\\branding_bar')\n  var appJS = Platform.Function.ContentBlockByName('Content Builder\\\\Basetime Preference Center\\\\frontend\\\\app_js')\n</script>\n\n%%=Concat('<sc','rip','t>')=%%\n\n  Vue.use(VueToast, {\n  position: 'top-right',\n  duration: 6000,\n  dismissable: true\n  });\n\n  Vue.use(VueFormulate)\n\n  var applicationConfiguration = <ctrl:var name=applicationConfiguration />\n  var preferenceOptions = <ctrl:var name=preferenceOptions />\n\n  <ctrl:var name=channelDrawer />\n  <ctrl:var name=preferenceForm />\n  <ctrl:var name=brandingBar />\n  <ctrl:var name=appJS />\n\n  %%=Concat('</sc','rip','t>')=%%"
+      },
+      {
+        "bldrId": "f873c166-22f2-494f-914a-8eb1b311ebb6",
+        "name": "channel_drawer",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/channel_drawer.html"
+        },
+        "content": "/*\nWhat is this component?\n*/\nVue.component('channel-drawer', {\n  props: {\n    preferenceOptions: Object,\n    branding: Object\n  },\n  methods: {\n    getPreferenceChannels: function (preferenceOptions) {\n      return Object.keys(preferenceOptions['channels'])\n    },\n    getChannelIcon: function (channel, preferenceOptions) {\n      return preferenceOptions['channels'][channel]['icon']\n    }\n  },\n  data() {\n    return {\n      channels: this.getPreferenceChannels(preferenceOptions),\n      right: null,\n    }\n  },\n  template: `\n  <div>\n    <v-navigation-drawer \n      permanent\n      max-height=\"100vh\"\n      height=\"80vh\"\n    >\n      <v-list dense nav>\n        <v-list-item v-for=\"channel in channels\" :key=\"channel\"  @click=\"$emit('update-channel-selection', channel)\" link>\n          <v-list-item-icon>\n            <v-icon\n              large\n              :color=\"branding.colors.accent\"\n            >{{ getChannelIcon(channel, this.preferenceOptions) }}</v-icon>\n          </v-list-item-icon>\n\n          <v-list-item-content>\n            <v-list-item-title class=\"text-h6 mb-8\">{{ channel }}</v-list-item-title>\n          </v-list-item-content>\n        </v-list-item>\n      </v-list>\n    </v-navigation-drawer>\n</div>\n`\n})"
+      },
+      {
+        "bldrId": "bcd2217d-4c65-447f-9658-2f5ddf74df15",
+        "name": "preference_options",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/configurations/preference_options.html"
+        },
+        "content": "{\n  \"profile\": {\n    \"headline\": \"Update your profile\",\n    \"copy\": \"\",\n    \"inputs\": [\n      {\n        \"type\": \"text\",\n        \"label\": \"First Name\",\n        \"name\": \"firstName\"\n      },\n      {\n        \"type\": \"text\",\n        \"label\": \"Last Name\",\n        \"name\": \"lastName\"\n      },\n      {\n        \"type\": \"text\",\n        \"label\": \"Email Address\",\n        \"name\": \"emailAddress\"\n      }\n    ],\n    \"checkboxes\": []\n  },\n  \"channels\": {\n    \"email\": {\n      \"icon\": \"mdi-email\",\n      \"preferences\": {\n        \"headline\": \"Email Preferences\",\n        \"copy\": \"Please select your email preferences below\",\n        \"radios\": [\n          {\n            \"value\": \"onceAWeek\",\n            \"label\": \"Once A Week\"\n          },\n          {\n            \"value\": \"holidays\",\n            \"label\": \"Holidays Only\"\n          },\n          {\n            \"value\": \"specialEvents\",\n            \"label\": \"Special Events Only\"\n          },\n          {\n            \"value\": \"unsubscribe\",\n            \"label\": \"Unsubscribe Me From All Emails\"\n          }\n        ]\n      },\n      \"subscriptions\": {\n        \"headline\": \"Email Subscriptions\",\n        \"copy\": \"Please select your email subscriptions below\",\n        \"inputs\": [],\n        \"checkboxes\": [\n          {\n            \"value\": \"dailyNewsletter\",\n            \"label\": \"Daily Newsletter\"\n          },\n          {\n            \"value\": \"devChat\",\n            \"label\": \"Developer Chat\"\n          },\n          {\n            \"value\": \"devOps\",\n            \"label\": \"Developer Ops Weekly\"\n          }\n        ]\n      }\n    },\n    \"sms\": {\n      \"icon\": \"mdi-android-messages\",\n      \"preferences\": {\n        \"headline\": \"SMS Preferences\",\n        \"copy\": \"Please select your text message preferences below\",\n        \"radios\": [\n          {\n            \"value\": \"onceAWeek\",\n            \"label\": \"Once A Week\"\n          },\n          {\n            \"value\": \"holidays\",\n            \"label\": \"Holidays Only\"\n          },\n          {\n            \"value\": \"specialEvents\",\n            \"label\": \"Special Events Only\"\n          },\n          {\n            \"value\": \"unsubscribe\",\n            \"label\": \"Unsubscribe Me From All Emails\"\n          }\n        ]\n      },\n      \"subscriptions\": {\n        \"headline\": \"SMS Subscriptions\",\n        \"copy\": \"Please select your text message subscriptions below\",\n        \"inputs\": [],\n        \"checkboxes\": [\n          {\n            \"value\": \"dailyNewsletter\",\n            \"label\": \"Daily Newsletter\"\n          },\n          {\n            \"value\": \"devChat\",\n            \"label\": \"Developer Chat\"\n          },\n          {\n            \"value\": \"devOps\",\n            \"label\": \"Developer Ops Weekly\"\n          }\n        ]\n      }\n    }\n  }\n}"
+      },
+      {
+        "bldrId": "aef47975-c115-4327-a052-7acc072f86b1",
+        "name": "branding_bar",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/branding_bar.html"
+        },
+        "content": "/*\nWhat is this component?\n*/\nVue.component('branding-bar', {\nprops: {\nbranding: Object\n},\nmounted() {\n\n},\ndata() {\nreturn {\ndarkModeToggle: false\n}\n},\nwatch: {\n\n},\nmethods: {\n\n},\ntemplate: `\n<div>\n  <v-card>\n    <v-app-bar :color=\"branding.colors.paper\" position=\"absolute\" height=\"100\">\n      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->\n\n      <v-toolbar-title>\n        <v-img :src=\"branding.logo\"></v-img>\n      </v-toolbar-title>\n\n      <v-spacer></v-spacer>\n\n\n      <v-switch :color=\"branding.colors.accent\" @click=\"$emit('update-dark-mode')\" v-model=\"darkModeToggle\">\n        <template v-slot:label>\n          <v-icon v-if=\"darkModeToggle\" large color=\"#F5F5F5\">\n            mdi-moon-waxing-crescent\n          </v-icon>\n          <v-icon v-else large color=\"#616161\">\n            mdi-white-balance-sunny\n          </v-icon>\n        </template>\n      </v-switch>\n\n    </v-app-bar>\n  </v-card>\n</div>\n`\n})"
+      },
+      {
+        "bldrId": "e35826e8-8da2-4e34-b61f-ed64365681df",
+        "name": "preference_form",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/components/preference_form.html"
+        },
+        "content": "/*\nWhat is this component?\n*/\nVue.component('preference-form', {\n  props: {\n    branding: Object,\n    preferenceOptions: Object,\n    channelSelection: String,\n    formSubmitting: Boolean\n  },\n  data() {\n    return {\n      formInputs: {\n        profile: {},\n        preferences: {},\n        subscriptions: {}\n      }\n    }\n  },\n  methods: {\n    submitPreferenceForm(){\n      this.$emit('submit-preference-form', this.formInputs)\n    }\n  },\n  computed: {\n    preferenceChannelConfiguration() {\n      if (this.channelSelection) {\n        return this.preferenceOptions['channels'][this.channelSelection]\n      }\n    },\n    profileFormSchema() {\n      let profileSchema = [\n        {\n          \"component\": \"h2\",\n          \"children\": `${this.preferenceOptions['profile']['headline']}`\n        },\n        {\n          \"component\": \"p\",\n          \"children\": `${this.preferenceOptions['profile']['copy']}`\n        }\n      ]\n\n      if (\n        Object.prototype.hasOwnProperty.call(this.preferenceOptions.profile, 'inputs')\n      ) {\n        profileSchema.push(...this.preferenceOptions.profile.inputs)\n      }\n\n      return profileSchema\n    },\n    preferenceFormSchema() {\n      let preferenceSchema = [\n        {\n          \"component\": \"h2\",\n          \"children\": `${this.preferenceChannelConfiguration['preferences']['headline']}`\n        },\n        {\n          \"component\": \"p\",\n          \"children\": `${this.preferenceChannelConfiguration['preferences']['copy']}`\n        }\n      ]\n\n      if (\n        Object.prototype.hasOwnProperty.call(this.preferenceChannelConfiguration['preferences'], 'radios')\n      ) {\n        preferenceSchema.push({\n          \"name\": \"preference\",\n          \"type\": \"radio\",\n          \"options\": this.preferenceChannelConfiguration['preferences']['radios']\n        })\n      }\n\n      return preferenceSchema\n    },\n    subscriptionFormSchema() {\n      let subscriptionSchema = [\n        {\n          \"component\": \"h2\",\n          \"children\": `${this.preferenceChannelConfiguration['subscriptions']['headline']}`\n        },\n        {\n          \"component\": \"p\",\n          \"children\": `${this.preferenceChannelConfiguration['subscriptions']['copy']}`\n        }\n      ]\n\n      if (\n        Object.prototype.hasOwnProperty.call(this.preferenceChannelConfiguration['subscriptions'], 'checkboxes')\n      ) {\n        subscriptionSchema.push({\n          \"name\": \"subscriptions\",\n          \"type\": \"checkbox\",\n          \"options\": this.preferenceChannelConfiguration['subscriptions']['checkboxes']\n        })\n      }\n\n      return subscriptionSchema\n    }\n  },\n  template: `\n<section>\n  <v-row class=\"flex\">\n    <v-col cols=\"12\" class=\"justify-center\">\n      <div v-if=\"preferenceOptions.profile.inputs\">\n        <formulate-form v-model=\"formInputs.profile\" :schema=\"profileFormSchema\" />\n      </div>\n    </v-col>\n  </v-row>\n\n  <v-row>\n    <v-col cols=\"12\" md=\"8\">\n      <v-divider class=\"my-5\"></v-divider>\n    </v-col>\n  </v-row>\n\n  <v-row class=\"flex\">\n    <v-col cols=\"12\" md=\"4\" class=\"mb-xs-4 mb-md-0\">\n      <div v-if=\"channelSelection\">\n        <formulate-form v-model=\"formInputs.preferences\" :schema=\"preferenceFormSchema\" />\n      </div>\n    </v-col>\n    <v-col cols=\"12\" md=\"4\">\n      <div v-if=\"channelSelection\">\n        <formulate-form v-model=\"formInputs.subscriptions\" :schema=\"subscriptionFormSchema\" />\n      </div>\n    </v-col>\n  </v-row>\n\n  <v-row>\n    <v-col cols=\"12\" md=\"8\">\n      <v-btn class=\"ma-2\" :loading=\"formSubmitting\" :disabled=\"formSubmitting\" color=\"info\" @click=\"submitPreferenceForm\">\n        Submit Updates\n        <template v-slot:loader>\n          <span class=\"custom-loader\">\n            <v-icon light>mdi-cached</v-icon>\n          </span>\n        </template>\n      </v-btn>\n    </v-col>\n  </v-row>\n</section>\n`\n})"
+      },
+      {
+        "bldrId": "35bfeea9-e9c9-4a5f-b6f8-4e7e0dd9e03f",
+        "name": "submit_button_animation",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/frontend/styles/submit_button_animation.html"
+        },
+        "content": "<style>\n  .custom-loader {\n    animation: loader 1s infinite;\n    display: flex;\n  }\n  @-moz-keyframes loader {\n    from {\n      transform: rotate(0);\n    }\n    to {\n      transform: rotate(360deg);\n    }\n  }\n  @-webkit-keyframes loader {\n    from {\n      transform: rotate(0);\n    }\n    to {\n      transform: rotate(360deg);\n    }\n  }\n  @-o-keyframes loader {\n    from {\n      transform: rotate(0);\n    }\n    to {\n      transform: rotate(360deg);\n    }\n  }\n  @keyframes loader {\n    from {\n      transform: rotate(0);\n    }\n    to {\n      transform: rotate(360deg);\n    }\n  }\n</style>"
+      },
+      {
+        "bldrId": "52a3235c-f37a-43c9-8c91-b6f2a56a03e9",
+        "name": "wsProxy",
+        "assetType": {
+          "id": 220,
+          "name": "codesnippetblock"
+        },
+        "category": {
+          "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs/wsProxy.html"
+        },
+        "content": "<script runat=\"server\">\n  Platform.Load(\"core\", \"1.1\");\n\n  function init() {\n      var prox = new Script.Util.WSProxy();\n      var fn = {};\n  \n      /*******************************\n       * @config {Object}\n       * @continueRequest {Boolean}\n       * @return {Array}\n       ******************************/\n      // fn.retrieve = function(config, continueRequest) {\n      //     var reqID;\n      //     var moreData = true;\n      //     var continueRequest = continueRequest ? continueRequest : false;\n      //     var obj = config.soapObjName ? config.soapObjName : null;\n      //     var opts = config.opts ? config.opts : {};\n      //     var props = config.props ? config.props : {};\n      //     var filter = config.filter ? config.filter : {};\n      //     var cols = config.cols ? config.cols : null;\n      //     var mid = config.mid ? config.mid : null;\n      //     prox = mid ? util.proxyContext(prox, mid) : prox;\n  \n      //     if (!config) { return 'configuration required'; }\n      //     if (!obj) { return 'SOAP object is required'; }\n  \n      //     var resultsOut = [];\n  \n      //     // my script to set the values for function\n      //     while (moreData) {\n      //         moreData = false;\n      //         if (reqID == null) {\n      //             if (filter) {\n      //                 var data = prox.retrieve(obj, cols, filter, opts, props);\n      //             } else {\n      //                 var data = prox.retrieve(obj, cols);\n      //             }\n      //         } else {\n      //             var data = prox.getNextBatch(obj, reqID);\n      //         }\n  \n      //         if (data != null) {\n  \n      //             if (continueRequest) {\n      //                 moreData = data.HasMoreRows;\n      //                 reqID = data.RequestID;\n      //             }\n  \n      //             //my script to interact with results\n      //             if (data && data.Results) {\n      //                 for (var i = 0; i < data.Results.length; i++) {\n      //                     resultsOut.push(data.Results[i]);\n      //                 }\n      //             }\n      //         }\n      //     }\n  \n  \n      //     var res = {\n      //         results: resultsOut\n      //     }\n      //     return res\n      // } // end retreive\n  \n  \n      /*******************************\n       * @config {Object}\n       * @return {Object}\n       ******************************/\n      // fn.create = function(config) {\n      //     var obj = config.soapObjName ? config.soapObjName : null;\n      //     var payload = config.payload ? config.payload : null;\n      //     var mid = config.mid ? config.mid : null;\n      //     prox = mid ? util.proxyContext(prox, mid) : prox;\n  \n      //     if (!config) { return 'configuration required'; }\n      //     if (!obj) { return 'configuration required'; }\n      //     if (!payload) { return 'payload is required'; }\n  \n      //     var batch = util.isArray(payload);\n  \n      //     if (batch) {\n      //         var res = prox.createBatch(obj, payload);\n      //     } else {\n      //         var res = prox.createItem(obj, payload);\n      //     }\n  \n      //     return res;\n      // } // end create\n  \n      /*******************************\n       * @config {Object}\n       * @return {Object}\n       ******************************/\n      // fn.update = function(config) {\n      //     var obj = config.soapObjName ? config.soapObjName : null;\n      //     var payload = config.payload ? config.payload : null;\n      //     var options = config.options ? config.options : null;\n      //     var mid = config.mid ? config.mid : null;\n      //     prox = mid ? util.proxyContext(prox, mid) : prox;\n  \n      //     if (!config) { return 'configuration required'; }\n      //     if (!obj) { return 'SOAP object is required'; }\n      //     if (!payload) { return 'payload is required'; }\n  \n      //     var batch = util.isArray(payload);\n  \n      //     if (batch) {\n      //         var res = prox.updateBatch(obj, payload, options);\n      //     } else {\n      //         var res = prox.updateItem(obj, payload, options);\n      //     }\n  \n      //     return res;\n      // } // end update\n  \n      return fn\n  }\n  \n  </script>"
+      }
+    ]
+  }
+}

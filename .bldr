@@ -64,5 +64,23 @@
     "bldrId": "aef47975-c115-4327-a052-7acc072f86b1",
     "id": 106938,
     "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/preference_form.html",
+    "bldrId": "e35826e8-8da2-4e34-b61f-ed64365681df",
+    "id": 107200,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/styles/submit_button_animation.html",
+    "bldrId": "35bfeea9-e9c9-4a5f-b6f8-4e7e0dd9e03f",
+    "id": 107340,
+    "context": "contentBuilder"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs/wsProxy.html",
+    "bldrId": "52a3235c-f37a-43c9-8c91-b6f2a56a03e9",
+    "id": 107374,
+    "context": "contentBuilder"
   }
 ]
