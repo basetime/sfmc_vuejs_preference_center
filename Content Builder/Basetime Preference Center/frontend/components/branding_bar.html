@@ -30,8 +30,7 @@ template: `
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-
+      
       <v-switch :color="branding.colors.accent" @click="$emit('update-dark-mode')" v-model="darkModeToggle">
         <template v-slot:label>
           <v-icon v-if="darkModeToggle" large color="#F5F5F5">

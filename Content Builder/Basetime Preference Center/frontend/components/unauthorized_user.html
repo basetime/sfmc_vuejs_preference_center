@@ -1,0 +1,38 @@
+/*
+What is this component?
+*/
+Vue.component('unauthorized-user', {
+props: {
+  unauthorized: Object,
+  branding: Object
+},
+mounted() {
+
+},
+data() {
+return {
+
+}
+},
+watch: {
+
+},
+methods: {
+
+},
+template: `
+<v-col cols="10" class="flex text-center mx-auto">
+  <v-row justify="space-around">
+    <v-icon :color="branding.colors.accent" size="200" aria-label="My Account" role="img" aria-hidden="false">
+      {{unauthorized.icon}}
+    </v-icon>
+  </v-row>
+  <v-row justify="space-around">
+    <v-col cols="8" class="text-h6 text-md-h5">
+      <span v-html="unauthorized.copy"></span>
+    </v-col>
+  </v-row>
+
+</v-col>
+`
+})

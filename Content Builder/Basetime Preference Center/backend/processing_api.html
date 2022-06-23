@@ -16,26 +16,46 @@
   var payload = Platform.Request.GetQueryStringParameter('payload');
 
   var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
-  var wsProxy = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\wsProxy')
-  var wsFn = wsProxy.init()
+  var applicationConfigurationJSON = Platform.Function.ParseJSON(applicationConfiguration)
+  var preferenceCenterDataExtensionExternalKey = applicationConfigurationJSON.preferenceCenterDataExtensionExternalKey;
+
+  Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\wsProxy')
+  // Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\utils')
+  // var utils = util();
+  var wsFn = wsProxy();
+
   var res = ''
- 
-  try {
+
+
   //Begin API Control Block
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
     case 'submitPreferenceForm':
-      
-      var preferenceDEExternalKey = applicationConfiguration.preferenceCenterDataExtensionExternalKey;
-      var preferenceDE = DataExtension.Init(preferenceDEExternalKey);
+ 
+        //update item
+        var updateConfig = {
+          soapObjName: "DataExtensionObject",
+          options: {
+            SaveOptions: [{
+              PropertyName: "*",
+              SaveAction: "UpdateAdd"
+            }]
+          },
+          payload: {
+            CustomerKey: preferenceCenterDataExtensionExternalKey,
+            Properties: postJSON.postData.updatedInfo
+          }
+        }
 
-      Write(Stringify(preferenceDE))
-    break;
+        var updatePreferences = wsFn.update(updateConfig);
+        res = updatePreferences;
+        Write(Stringify(res))
+        
+      break;
   };
 
-}catch(err){
-  Write(Stringify(err))
-}
+
+
 
 </script>

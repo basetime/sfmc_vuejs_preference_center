@@ -1,5 +1,5 @@
 %%=TreatAsContent(ContentBlockByName('Content Builder\Basetime Preference Center\frontend\styles\submit_button_animation'))=%%
-
+%%=TreatAsContent(ContentBlockByName('Content Builder\Basetime Preference Center\lib\validation\subscriber_validation'))=%%
 
 <script runat="server">
   Platform.Load("core", "1.1.1");
@@ -9,6 +9,7 @@
   
   var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\channel_drawer')
   var preferenceForm = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\preference_form')
+  var unauthorizedUser = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\unauthorized_user')
   var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\branding_bar')
   var appJS = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_js')
 </script>
@@ -26,8 +27,15 @@
   var applicationConfiguration = <ctrl:var name=applicationConfiguration />
   var preferenceOptions = <ctrl:var name=preferenceOptions />
 
+  var isAuthorized = <ctrl:var name=authorized />
+  var subscriberId = <ctrl:var name=subscriberId />
+  var emailAddress = <ctrl:var name=emailAddress />
+  var subscriberKey = <ctrl:var name=subscriberKey />
+  var jobId = <ctrl:var name=jobId />
+
   <ctrl:var name=channelDrawer />
   <ctrl:var name=preferenceForm />
+  <ctrl:var name=unauthorizedUser />
   <ctrl:var name=brandingBar />
   <ctrl:var name=appJS />
 

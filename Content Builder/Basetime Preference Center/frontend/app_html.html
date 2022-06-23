@@ -1,25 +1,24 @@
 <v-app>
   <v-main>
-    <v-row
-      overflow="hidden"
-    >
-      <v-col
-        cols="12"
-      >
+    <v-row overflow="hidden">
+      <v-col cols="12">
         <branding-bar @update-dark-mode="onUpdateDarkMode" :dark-mode="darkMode" :branding="branding"></branding-bar>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col
-        cols="2"
-      >
-        <channel-drawer @update-channel-selection="onUpdateChannelSelection" :branding="branding" :preference-options="preferenceOptions"></channel-drawer>
+    <v-row v-if="authorized">
+      <v-col cols="2">
+        <channel-drawer @update-channel-selection="onUpdateChannelSelection" :branding="branding"
+          :preference-options="preferenceOptions"></channel-drawer>
       </v-col>
-      <v-col
-        cols="10"
-      >
-        <preference-form @submit-preference-form="onSubmitPreferenceForm" :form-submitting="formSubmitting" :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection"></preference-form>
+      <v-col cols="10">
+        <preference-form @submit-preference-form="onSubmitPreferenceForm" :form-submitting="formSubmitting"
+          :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection">
+        </preference-form>
       </v-col>
+    </v-row>
+    <v-row v-else>
+      <unauthorized-user :branding="branding" :unauthorized="applicationConfiguration.unauthorized">
+      </unauthorized-user>
     </v-row>
   </v-main>
 </v-app>

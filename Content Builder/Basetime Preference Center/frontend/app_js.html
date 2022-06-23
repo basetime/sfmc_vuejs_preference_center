@@ -3,6 +3,7 @@ new Vue({
   vuetify: new Vuetify(),
   data () { 
     return {
+      authorized: isAuthorized === 1 ? true : false,
       darkMode: false,
       debug: true,
       applicationConfiguration,
@@ -10,8 +11,10 @@ new Vue({
       channelSelection: null,
       formSubmitting: false,
       subscriber: {
-        subscriberId: '12345',
-        emailAddress: 'tony.zupancic@gmail.com'
+        subscriberId: subscriberId,
+        subscriberKey: subscriberKey,
+        emailAddress: emailAddress,
+        jobId: jobId
       }
     }
   },
@@ -33,11 +36,62 @@ new Vue({
     },
     async onSubmitPreferenceForm($event) {
       try {
+        let postData = {
+          updatedInfo: []
+        };
+        
+        if(Object.prototype.hasOwnProperty.call($event, 'profile')){
+          const profileData = $event.profile;
+          for(const pro in profileData){
+            postData.updatedInfo.push({
+              Name: pro,
+              Value: profileData[pro]
+            })
+          }
+        }
+
+        if(Object.prototype.hasOwnProperty.call($event, 'preferences')){
+          const preferenceData = $event.preferences;
+          for(const pre in preferenceData){
+            postData.updatedInfo.push({
+              Name: pre,
+              Value: preferenceData[pre]
+            })
+          }
+        }
+     
+        if(Object.prototype.hasOwnProperty.call($event, 'subscriptions')){
+          const subscriptionData = $event.subscriptions.subscriptions;
+          let subscriptions = ''
+
+          for(const sub of subscriptionData){
+           subscriptions += `${sub}|`
+          }
+
+          subscriptions = subscriptions.substring(0, subscriptions.length - 1)
+
+          postData.updatedInfo.push({
+            Name: 'subscriptions',
+            Value: subscriptions
+          })
+        }
+
+        postData.updatedInfo.push({
+          Name: 'subscriberId',
+          Value: this.subscriber.subscriberId
+        },
+        {
+          Name: 'emailAddress',
+          Value: this.subscriber.emailAddress
+        },
+        {
+          Name: 'channel',
+          Value: this.channelSelection
+        })
+
 
         const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
-          subscriber: this.subscriber,
-          channel: this.channelSelection,
-          formInputs: $event
+          postData
         })
         
         console.log(submitRequest)

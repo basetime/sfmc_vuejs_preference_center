@@ -1,0 +1,66 @@
+<script runat="server">
+  Platform.Load("core", "1.1.1");
+  
+  function util() {
+      var fn = {}
+  
+      fn.isArray = function(arg) {
+          return Object.prototype.toString.call(arg) === '[object Array]';
+      }
+      
+      
+      fn.response = function(arg) {
+          Write(Stringify(arg))
+      }
+  
+  
+      fn.proxyContext = function(prox, mid) {
+          if (mid) {
+              //reset previous settings
+              prox.resetClientIds();
+              // Set ClientID 
+              prox.setClientId({
+                  "ID": mid
+              });
+          }
+          return prox
+      }
+  
+  
+      fn.deBug = function(action, response, logExtKey, debug) {
+          if (response) {
+              debug ? Write("<br><b>" + action + ":</b><br> " + Stringify(response) + "<br><br>") : null;
+          } else {
+              debug ? Write("<br><b>" + action + "</b><br> ") : null;
+          }
+  
+          if (logExtKey) {
+              var log = {
+                  action: action ? action : null,
+                  log: response ? response : null
+              }
+  
+              addLog(log, logExtKey);
+          }
+      }
+  
+  
+      /***********************************************
+       *
+       *   function addLog()
+       *   Pushes logging object to array to be written to a Data Extension
+       *   
+       *    @param obj {Object} logging object that matches the data extension
+       *    @param logExtKey {String} External Key to log records to
+       *    
+       ***********************************************/
+      fn.addLog = function(obj, logExtKey) {
+          var logDE = DataExtension.Init(logExtKey);
+          var logAction = logDE.Rows.Add(obj);
+      };
+  
+      
+      return fn
+  }
+  
+  </script>

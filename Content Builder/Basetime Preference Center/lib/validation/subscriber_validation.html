@@ -1,0 +1,22 @@
+%%[
+  set @subscriberkey = AttributeValue("_subscriberkey")
+  set @subscriberid = AttributeValue("subscriberid")
+  set @emailAddress = AttributeValue("emailaddr")
+  set @jobid = AttributeValue("jobid")
+]%%
+
+<script runat="server">
+  Platform.Load("core", "1.1.1");
+
+  var subscriberKey = Stringify(Variable.GetValue("@subscriberkey"));
+  var subscriberId = Variable.GetValue("@subscriberid");
+  var emailAddress = Stringify(Variable.GetValue("@emailAddress"));
+  var jobId = Variable.GetValue("@jobid");
+
+  var authorized = 0;
+  if(typeof subscriberId !== 'undefined' && (typeof jobId !== 'undefined' && jobId !== '0')) {
+    authorized = 1;
+  }
+
+  authorized = 1
+</script>
