@@ -11,7 +11,7 @@ Vue.component('channel-drawer', {
       return Object.keys(preferenceOptions['channels'])
     },
     getChannelIcon: function (channel, preferenceOptions) {
-      return preferenceOptions['channels'][channel]['icon']
+      return this.preferenceOptions['channels'][channel]['icon']
     }
   },
   data() {

@@ -6,6 +6,35 @@
     var fn = {};
 
     /*******************************
+     * @config {<Object>}
+     * @continueRequest {Boolean}
+     * @return {Array}
+     ******************************/
+    fn.retrieve = function (config, continueRequest) {
+
+      var reqID;
+      var moreData = true;
+      var continueRequest = continueRequest ? continueRequest : false;
+      var obj = config.soapObjName ? config.soapObjName : null;
+      var opts = config.opts ? config.opts : {};
+      var props = config.props ? config.props : {};
+      var filter = config.filter ? config.filter : {};
+      var cols = config.cols ? config.cols : null;
+      var mid = config.mid ? config.mid : null;
+      // prox = mid ? util.proxyContext(prox, mid) : prox;
+
+      if (!config) { return 'configuration required'; }
+      if (!obj) { return 'SOAP object is required'; }
+
+      var resultsOut = [];
+
+      var data = prox.retrieve(obj, cols, filter, opts, props)
+
+      return data
+
+    } // end retrieve
+
+    /*******************************
      * @config {Object}
      * @return {Object}
      ******************************/

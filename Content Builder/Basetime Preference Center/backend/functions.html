@@ -1,5 +1,127 @@
 <script runat="server">
   Platform.Load('core', '1.1')
 
-  //updated comment
+
+  /*
+    getDERecords Function
+     Retrieves rows from a Data Extension
+     
+      Dependencies:
+         - DEData Function
+      @config {object} object with payload for wsProxy call
+     
+     //Sample Usage
+     
+     var config = {
+       deName: "Data Extension Name",
+       col: [],
+       filter: {
+         Property: "EmailAddress",
+         SimpleOperator: "isNotNull",
+         Value: ""
+       },
+       opts: {
+         BatchSize: 10
+       }
+     };
+         
+     var data = getDERecords(config);
+     
+     //optional//
+     If only specific fields are needed, add a cols array of those fields.
+     When no cols key is included, function will get all fields.
+     
+     var config = {
+       deName: "Data Extension Name",
+       cols: ["EmailAddress", "SubscriberKey"]
+       filter: {
+         Property: "EmailAddress",
+         SimpleOperator: "isNotNull",
+         Value: ""
+       },
+       opts: {
+         BatchSize: 10
+       }
+     };
+     
+  */
+  function getDERecords(config, fns) {
+    var deData = getDEData(config.deName);
+    var deKey = deData.Results[0].CustomerKey
+
+    var deConfig = {
+      soapObjName: "DataExtensionObject[" + deKey + "]"
+    };
+
+    deConfig.cols = config.cols.length > 0 ? config.cols : getFieldNames(config.deName);
+    if (config.filter) { deConfig.filter = config.filter; };
+    if (config.opts) { deConfig.opts = config.opts; };
+
+    var deRecords = fns.wsProxy.wsRetrieve(deConfig).Results;
+    var recordsOutput = fns.utils.formatResult(deRecords, "Properties")
+
+    return recordsOutput;
+  };
+
+
+
+
+  /***********************************************
+  *
+  *   function getFieldNames()
+  *   Gets all columns from a SOAP Object
+  *
+  *    @peram {deName} Name of DataExtension to get columns
+  *
+  *    @output {array} array of fields
+  *
+  ***********************************************/
+
+  function getFieldNames(deName) {
+    var attr = DataExtension.Retrieve({ Property: "Name", SimpleOperator: "equals", Value: deName });
+    var de = DataExtension.Init(attr[0].CustomerKey);
+    var fields = de.Fields.Retrieve();
+
+    fields.sort(function (a, b) { return (a.Ordinal > b.Ordinal) ? 1 : -1 });
+
+    var out = [];
+
+    for (k in fields) {
+      out = out.concat(fields[k].Name);
+    }
+
+    deBug("Field Names", attr, debug);
+
+    return out;
+
+  } //End retrieveFieldNames
+
+
+  /***********************************************
+   *
+   *   function formatResult()
+   *   Takes Objects that are Name/Value pairs {Name: "Key", Value: "Value"} and
+   *   normalizes them to a standard JSON object {key: "value"}
+   *
+   *    @peram {arr} array to normalize
+   *    @peram {prop} property key of Array
+   *
+   *    @output Array of normalized JSON object
+   *
+   ***********************************************/
+  function formatResult(arr, prop) {
+    var results = [];
+    for (var i = 0; i < arr.length; i++) {
+      var result_list = arr[i][prop];
+      var obj = {};
+      for (k in result_list) {
+        var key = result_list[k].Name;
+        var val = result_list[k].Value
+        if (key.indexOf("_") != 0) obj[key] = val;
+      }
+      results.push(obj);
+    }
+    return results;
+  };
+
 </script>

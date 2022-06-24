@@ -8,7 +8,6 @@
   Platform.Response.SetResponseHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   Platform.Response.SetResponseHeader('Content-Security-Policy', "default-src 'self'");
 
-
   var postData = Platform.Request.GetPostData();
   var postJSON = Platform.Function.ParseJSON(postData);
 
@@ -17,45 +16,79 @@
 
   var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
   var applicationConfigurationJSON = Platform.Function.ParseJSON(applicationConfiguration)
-  var preferenceCenterDataExtensionExternalKey = applicationConfigurationJSON.preferenceCenterDataExtensionExternalKey;
+  var map = applicationConfigurationJSON.map;
+  
+  var preferenceCenterDataExtensionExternalKey = map.data_extension.preferenceCenterExternalKey;
 
-  Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\wsProxy')
-  // Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\lib\\ssjs\\utils')
+  Platform.Function.ContentBlockByName(map.content_block.ssjs.wsProxy)
+  Platform.Function.ContentBlockByName(map.content_block.ssjs.utils)
+
+  var fns = {
+    utils: util(),
+    wsProxy: wsProxy()
+  }
+
   // var utils = util();
-  var wsFn = wsProxy();
+  // var wsFn = wsProxy();
 
-  var res = ''
-
+  var res = '';
+  var reqConfig = {};
 
   //Begin API Control Block
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
     case 'submitPreferenceForm':
- 
-        //update item
-        var updateConfig = {
-          soapObjName: "DataExtensionObject",
-          options: {
-            SaveOptions: [{
-              PropertyName: "*",
-              SaveAction: "UpdateAdd"
-            }]
-          },
-          payload: {
-            CustomerKey: preferenceCenterDataExtensionExternalKey,
-            Properties: postJSON.postData.updatedInfo
-          }
+      //update item
+      reqConfig = {
+        soapObjName: "DataExtensionObject",
+        options: {
+          SaveOptions: [{
+            PropertyName: "*",
+            SaveAction: "UpdateAdd"
+          }]
+        },
+        payload: {
+          CustomerKey: preferenceCenterDataExtensionExternalKey,
+          Properties: postJSON.postData.updatedInfo
         }
+      }
 
-        var updatePreferences = wsFn.update(updateConfig);
-        res = updatePreferences;
-        Write(Stringify(res))
-        
+      var updatePreferences = fns.wsProxy.update(reqConfig);
+      res = updatePreferences;
+
+      break;
+
+
+    case 'getCurrentPreferences':
+      var preferences;
+
+      reqConfig = {
+        dataExtensionKey: preferenceCenterDataExtensionExternalKey,
+        cols: [],
+        filter: {
+          Property: "subscriberId",
+          SimpleOperator: "equals",
+          Value: postJSON.subscriberId
+        }
+      };
+
+      var preferenceRequest = fns.utils.getDERecords(reqConfig, fns);
+
+      if(preferenceRequest.Status === 'OK'){
+        preferences = fns.utils.formatResult(preferenceRequest.Results, 'Properties')
+        res = {
+          Status: 'OK',
+          Results: preferences
+        }
+      } else {
+        res = preferenceRequest;
+      }
+
       break;
   };
 
-
+  fns.utils.response(res)
 
 
 </script>

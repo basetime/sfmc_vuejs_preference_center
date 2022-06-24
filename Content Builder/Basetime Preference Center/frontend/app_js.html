@@ -8,18 +8,20 @@ new Vue({
       debug: true,
       applicationConfiguration,
       preferenceOptions,
-      channelSelection: null,
+      channelSelection,
       formSubmitting: false,
       subscriber: {
         subscriberId: subscriberId,
         subscriberKey: subscriberKey,
         emailAddress: emailAddress,
-        jobId: jobId
+        jobId: jobId,
+        preferences: []
       }
     }
   },
   mounted () {
     this.debug && this.debugData();
+    this.getExistingPreferences();
   },
   methods: {
     debugData() {
@@ -27,6 +29,27 @@ new Vue({
         config: this.applicationConfiguration,
         preferenceOptions: this.preferenceOptions
       })
+    },
+    getDefaultChannelSelection(){
+      const channels = Object.keys(this.preferenceOptions.channels);
+      this.channelSelection = channels[0];
+    },
+    async getExistingPreferences(){
+      try {
+        const subscriberId = this.subscriber.subscriberId;
+        const submitRequest = await axios.post(`${this.apiBaseURL}getCurrentPreferences`, {
+          subscriberId
+        })
+
+        console.log(submitRequest)
+
+        if(submitRequest.data.Status === 'OK'){
+          this.subscriber.preferences = submitRequest.data.Results;
+        } 
+
+      } catch (err) {
+        console.log(err)
+      }
     },
     onUpdateDarkMode() {
       this.darkMode = !this.darkMode

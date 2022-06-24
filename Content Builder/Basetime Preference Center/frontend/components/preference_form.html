@@ -1,3 +1,5 @@
+
+
 /*
 What is this component?
 */
@@ -6,10 +8,19 @@ Vue.component('preference-form', {
     branding: Object,
     preferenceOptions: Object,
     channelSelection: String,
-    formSubmitting: Boolean
+    formSubmitting: Boolean,
+    subscriberPreferences: Array
+  },
+  beforeMount() {
+    this.setProfileFormSchema();
+    this.setPreferenceFormSchema();
+    this.setSubscriptionFormSchema();
   },
   data() {
     return {
+      profileFormSchema: [],
+      preferenceFormSchema: [],
+      subscriptionFormSchema: [],
       formInputs: {
         profile: {},
         preferences: {},
@@ -18,17 +29,10 @@ Vue.component('preference-form', {
     }
   },
   methods: {
-    submitPreferenceForm(){
+    submitPreferenceForm() {
       this.$emit('submit-preference-form', this.formInputs)
-    }
-  },
-  computed: {
-    preferenceChannelConfiguration() {
-      if (this.channelSelection) {
-        return this.preferenceOptions['channels'][this.channelSelection]
-      }
     },
-    profileFormSchema() {
+    setProfileFormSchema() {
       let profileSchema = [
         {
           "component": "h2",
@@ -43,12 +47,19 @@ Vue.component('preference-form', {
       if (
         Object.prototype.hasOwnProperty.call(this.preferenceOptions.profile, 'inputs')
       ) {
-        profileSchema.push(...this.preferenceOptions.profile.inputs)
+        const profileData = this.preferenceOptions.profile.inputs;
+
+        for (const pro in profileData) {
+          let inputObject = profileData[pro];
+          this.formInputs['profile'][inputObject.name] = this.channelPreferences[inputObject.name];
+      
+          profileSchema.push(inputObject)
+        }
       }
 
-      return profileSchema
+      this.profileFormSchema = profileSchema
     },
-    preferenceFormSchema() {
+    setPreferenceFormSchema() {
       let preferenceSchema = [
         {
           "component": "h2",
@@ -68,11 +79,13 @@ Vue.component('preference-form', {
           "type": "radio",
           "options": this.preferenceChannelConfiguration['preferences']['radios']
         })
+
+        this.formInputs.preferences.preference = this.channelPreferences.preference;
       }
 
-      return preferenceSchema
+      this.preferenceFormSchema = preferenceSchema
     },
-    subscriptionFormSchema() {
+    setSubscriptionFormSchema() {
       let subscriptionSchema = [
         {
           "component": "h2",
@@ -94,15 +107,36 @@ Vue.component('preference-form', {
         })
       }
 
-      return subscriptionSchema
+      this.formInputs.subscriptions.subscriptions = this.channelPreferences.subscriptions.split("|") || [];
+      this.subscriptionFormSchema = subscriptionSchema
     }
+  },
+  watch: {
+    channelSelection: function(newVal, oldVal) {
+      this.setProfileFormSchema();
+      this.setPreferenceFormSchema();
+      this.setSubscriptionFormSchema();
+    }
+  },
+  computed: {
+    preferenceChannelConfiguration() {
+      if (this.channelSelection) {
+        return this.preferenceOptions['channels'][this.channelSelection]
+      }
+    },
+    channelPreferences() {
+      if (this.channelSelection) {
+        return this.subscriberPreferences.find((pref) => pref.channel === this.channelSelection)
+      }
+    },
+
   },
   template: `
 <section>
   <v-row class="flex">
     <v-col cols="12" class="justify-center">
-      <div v-if="preferenceOptions.profile.inputs">
-        <formulate-form v-model="formInputs.profile" :schema="profileFormSchema" />
+      <div v-show="preferenceOptions.profile.inputs">
+        <formulate-form :values="formInputs.profile" v-model="formInputs.profile" :schema="profileFormSchema" />
       </div>
     </v-col>
   </v-row>
@@ -115,13 +149,13 @@ Vue.component('preference-form', {
 
   <v-row class="flex">
     <v-col cols="12" md="4" class="mb-xs-4 mb-md-0">
-      <div v-if="channelSelection">
-        <formulate-form v-model="formInputs.preferences" :schema="preferenceFormSchema" />
+      <div v-show="channelSelection">
+        <formulate-form :values="formInputs.preferences" v-model="formInputs.preferences" :schema="preferenceFormSchema" />
       </div>
     </v-col>
     <v-col cols="12" md="4">
-      <div v-if="channelSelection">
-        <formulate-form v-model="formInputs.subscriptions" :schema="subscriptionFormSchema" />
+      <div v-show="channelSelection">
+        <formulate-form :values="formInputs.subscriptions" v-model="formInputs.subscriptions" :schema="subscriptionFormSchema" />
       </div>
     </v-col>
   </v-row>

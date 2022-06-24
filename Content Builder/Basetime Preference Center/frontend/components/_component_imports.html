@@ -5,13 +5,16 @@
   Platform.Load("core", "1.1.1");
 
   var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
-  var preferenceOptions = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\preference_options')
-  
-  var channelDrawer = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\channel_drawer')
-  var preferenceForm = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\preference_form')
-  var unauthorizedUser = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\unauthorized_user')
-  var brandingBar = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\components\\branding_bar')
-  var appJS = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\frontend\\app_js')
+  var applicationConfigurationJSON = Platform.Function.ParseJSON(applicationConfiguration)
+  var map = applicationConfigurationJSON.map;
+
+  var preferenceOptions = Platform.Function.ContentBlockByName(map.content_block.preference_options)
+  var channelDrawer = Platform.Function.ContentBlockByName(map.content_block.channel_drawer)
+  var preferenceForm = Platform.Function.ContentBlockByName(map.content_block.preference_form)
+  var unauthorizedUser = Platform.Function.ContentBlockByName(map.content_block.unauthorized_user)
+  var brandingBar = Platform.Function.ContentBlockByName(map.content_block.branding_bar)
+  var appJS = Platform.Function.ContentBlockByName(map.content_block.app_js)
+
 </script>
 
 %%=Concat('<sc','rip','t>')=%%
@@ -24,19 +27,22 @@
 
   Vue.use(VueFormulate)
 
-  var applicationConfiguration = <ctrl:var name=applicationConfiguration />
-  var preferenceOptions = <ctrl:var name=preferenceOptions />
+  const applicationConfiguration = <ctrl:var name=applicationConfiguration />
+  const preferenceOptions = <ctrl:var name=preferenceOptions />
 
-  var isAuthorized = <ctrl:var name=authorized />
-  var subscriberId = <ctrl:var name=subscriberId />
-  var emailAddress = <ctrl:var name=emailAddress />
-  var subscriberKey = <ctrl:var name=subscriberKey />
-  var jobId = <ctrl:var name=jobId />
+  const channelKeys = Object.keys(preferenceOptions.channels);
+  const channelSelection = channelKeys[0];
 
+  const isAuthorized = <ctrl:var name=authorized />
+  const subscriberId = <ctrl:var name=subscriberId />
+  const emailAddress = <ctrl:var name=emailAddress />
+  const subscriberKey = <ctrl:var name=subscriberKey />
+  const jobId = <ctrl:var name=jobId />
+
+  <ctrl:var name=appJS />
   <ctrl:var name=channelDrawer />
   <ctrl:var name=preferenceForm />
   <ctrl:var name=unauthorizedUser />
   <ctrl:var name=brandingBar />
-  <ctrl:var name=appJS />
 
   %%=Concat('</sc','rip','t>')=%%

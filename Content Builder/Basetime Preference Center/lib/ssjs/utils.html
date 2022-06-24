@@ -1,66 +1,183 @@
 <script runat="server">
   Platform.Load("core", "1.1.1");
-  
+
   function util() {
-      var fn = {}
-  
-      fn.isArray = function(arg) {
-          return Object.prototype.toString.call(arg) === '[object Array]';
+    var fn = {}
+
+    fn.isArray = function (arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]';
+    }
+
+
+    fn.response = function (arg) {
+      Write(Stringify(arg))
+    }
+
+
+    fn.proxyContext = function (prox, mid) {
+      if (mid) {
+        //reset previous settings
+        prox.resetClientIds();
+        // Set ClientID 
+        prox.setClientId({
+          "ID": mid
+        });
       }
-      
-      
-      fn.response = function(arg) {
-          Write(Stringify(arg))
+      return prox
+    }
+
+
+    fn.deBug = function (action, response, logExtKey, debug) {
+      if (response) {
+        debug ? Write("<br><b>" + action + ":</b><br> " + Stringify(response) + "<br><br>") : null;
+      } else {
+        debug ? Write("<br><b>" + action + "</b><br> ") : null;
       }
-  
-  
-      fn.proxyContext = function(prox, mid) {
-          if (mid) {
-              //reset previous settings
-              prox.resetClientIds();
-              // Set ClientID 
-              prox.setClientId({
-                  "ID": mid
-              });
-          }
-          return prox
+
+      if (logExtKey) {
+        var log = {
+          action: action ? action : null,
+          log: response ? response : null
+        }
+
+        addLog(log, logExtKey);
       }
-  
-  
-      fn.deBug = function(action, response, logExtKey, debug) {
-          if (response) {
-              debug ? Write("<br><b>" + action + ":</b><br> " + Stringify(response) + "<br><br>") : null;
-          } else {
-              debug ? Write("<br><b>" + action + "</b><br> ") : null;
-          }
-  
-          if (logExtKey) {
-              var log = {
-                  action: action ? action : null,
-                  log: response ? response : null
-              }
-  
-              addLog(log, logExtKey);
-          }
-      }
-  
-  
-      /***********************************************
-       *
-       *   function addLog()
-       *   Pushes logging object to array to be written to a Data Extension
-       *   
-       *    @param obj {Object} logging object that matches the data extension
-       *    @param logExtKey {String} External Key to log records to
-       *    
-       ***********************************************/
-      fn.addLog = function(obj, logExtKey) {
-          var logDE = DataExtension.Init(logExtKey);
-          var logAction = logDE.Rows.Add(obj);
+    }
+
+
+    /***********************************************
+     *
+     *   function addLog()
+     *   Pushes logging object to array to be written to a Data Extension
+     *   
+     *    @param obj {Object} logging object that matches the data extension
+     *    @param logExtKey {String} External Key to log records to
+     *    
+     ***********************************************/
+    fn.addLog = function (obj, logExtKey) {
+      var logDE = DataExtension.Init(logExtKey);
+      var logAction = logDE.Rows.Add(obj);
+    };
+
+
+
+    /*
+      getDERecords Function
+       Retrieves rows from a Data Extension
+       
+        Dependencies:
+           - DEData Function
+        @config {object} object with payload for wsProxy call
+       
+       //Sample Usage
+       
+       var config = {
+         deName: "Data Extension Name",
+         col: [],
+         filter: {
+           Property: "EmailAddress",
+           SimpleOperator: "isNotNull",
+           Value: ""
+         },
+         opts: {
+           BatchSize: 10
+         }
+       };
+           
+       var data = getDERecords(config);
+       
+       //optional//
+       If only specific fields are needed, add a cols array of those fields.
+       When no cols key is included, function will get all fields.
+       
+       var config = {
+         deName: "Data Extension Name",
+         cols: ["EmailAddress", "SubscriberKey"]
+         filter: {
+           Property: "EmailAddress",
+           SimpleOperator: "isNotNull",
+           Value: ""
+         },
+         opts: {
+           BatchSize: 10
+         }
+       };
+       
+    */
+    fn.getDERecords = function (config, fns) {
+
+      var deConfig = {
+        soapObjName: "DataExtensionObject[" + config.dataExtensionKey + "]"
       };
-  
-      
-      return fn
+
+      deConfig.cols = config.cols.length > 0 ? config.cols : fns.utils.getFieldNames(config.dataExtensionKey);
+      if (config.filter) { deConfig.filter = config.filter; };
+      if (config.opts) { deConfig.opts = config.opts; };
+
+      var deRecords = fns.wsProxy.retrieve(deConfig);
+      return deRecords;
+    };
+
+
+
+
+    /***********************************************
+    *
+    *   function getFieldNames()
+    *   Gets all columns from a SOAP Object
+    *
+    *    @peram {deName} Name of DataExtension to get columns
+    *
+    *    @output {array} array of fields
+    *
+    ***********************************************/
+
+    fn.getFieldNames = function (dataExtensionKey) {
+      var de = DataExtension.Init(dataExtensionKey);
+      var fields = de.Fields.Retrieve();
+
+      fields.sort(function (a, b) { return (a.Ordinal > b.Ordinal) ? 1 : -1 });
+
+      var out = [];
+
+      for (k in fields) {
+        out = out.concat(fields[k].Name);
+      }
+
+      return out;
+
+    } //End retrieveFieldNames
+
+
+    /***********************************************
+    *
+    *   function formatResult()
+    *   Takes Objects that are Name/Value pairs {Name: "Key", Value: "Value"} and
+    *   normalizes them to a standard JSON object {key: "value"}
+    *
+    *    @peram {arr} array to normalize
+    *    @peram {prop} property key of Array
+    *
+    *    @output Array of normalized JSON object
+    *
+    ***********************************************/
+    fn.formatResult = function (arr, prop) {
+      var results = [];
+      for (var i = 0; i < arr.length; i++) {
+        var result_list = arr[i][prop];
+        var obj = {};
+        for (k in result_list) {
+          var key = result_list[k].Name;
+          var val = result_list[k].Value
+          if (key.indexOf("_") != 0) obj[key] = val;
+        }
+        results.push(obj);
+      }
+      return results;
+    };
+
+
+    return fn
   }
-  
-  </script>
+
+</script>
