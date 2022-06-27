@@ -1,11 +1,12 @@
 new Vue({
   el: '#app',
   vuetify: new Vuetify(),
-  data () { 
+  data() {
     return {
       authorized: isAuthorized === 1 ? true : false,
       darkMode: false,
       debug: true,
+      channels: [],
       applicationConfiguration,
       preferenceOptions,
       channelSelection,
@@ -19,7 +20,10 @@ new Vue({
       }
     }
   },
-  mounted () {
+  beforeMount() {
+    this.getPreferenceChannels();
+  },
+  mounted() {
     this.debug && this.debugData();
     this.getExistingPreferences();
   },
@@ -30,11 +34,14 @@ new Vue({
         preferenceOptions: this.preferenceOptions
       })
     },
-    getDefaultChannelSelection(){
-      const channels = Object.keys(this.preferenceOptions.channels);
+    getPreferenceChannels(preferenceOptions) {
+      this.channels = Object.keys(this.preferenceOptions.channels)
+    },
+    getDefaultChannelSelection() {
+      const channels = this.channels;
       this.channelSelection = channels[0];
     },
-    async getExistingPreferences(){
+    async getExistingPreferences() {
       try {
         const subscriberId = this.subscriber.subscriberId;
         const submitRequest = await axios.post(`${this.apiBaseURL}getCurrentPreferences`, {
@@ -43,9 +50,9 @@ new Vue({
 
         console.log(submitRequest)
 
-        if(submitRequest.data.Status === 'OK'){
+        if (submitRequest.data.Status === 'OK') {
           this.subscriber.preferences = submitRequest.data.Results;
-        } 
+        }
 
       } catch (err) {
         console.log(err)
@@ -59,65 +66,108 @@ new Vue({
     },
     async onSubmitPreferenceForm($event) {
       try {
-        let postData = {
-          updatedInfo: []
-        };
-        
-        if(Object.prototype.hasOwnProperty.call($event, 'profile')){
-          const profileData = $event.profile;
-          for(const pro in profileData){
-            postData.updatedInfo.push({
-              Name: pro,
-              Value: profileData[pro]
-            })
-          }
-        }
+        const channels = this.channels;
+        const postData = {};
 
-        if(Object.prototype.hasOwnProperty.call($event, 'preferences')){
-          const preferenceData = $event.preferences;
-          for(const pre in preferenceData){
-            postData.updatedInfo.push({
-              Name: pre,
-              Value: preferenceData[pre]
-            })
-          }
-        }
-     
-        if(Object.prototype.hasOwnProperty.call($event, 'subscriptions')){
-          const subscriptionData = $event.subscriptions.subscriptions;
-          let subscriptions = ''
+        console.log($event)
 
-          for(const sub of subscriptionData){
-           subscriptions += `${sub}|`
+        for (const c in channels) {
+          const channel = channels[c];
+          let channelProperties = new Array();
+
+          if (Object.prototype.hasOwnProperty.call($event, 'profile')) {
+            const profileData = $event.profile;
+
+            if (profileData.hasUpdatedValues) {
+              channelProperties.push({
+                Name: 'profileUpdatedDate',
+                Value: new Date()
+              })
+
+
+              for (const pro in profileData) {
+                channelProperties.push({
+                  Name: pro,
+                  Value: profileData[pro]
+                })
+              }
+            }
           }
 
-          subscriptions = subscriptions.substring(0, subscriptions.length - 1)
 
-          postData.updatedInfo.push({
-            Name: 'subscriptions',
-            Value: subscriptions
-          })
+          if (Object.prototype.hasOwnProperty.call($event[channel], 'preferences')) {
+            const preferenceData = $event[channel]['preferences'];
+
+            if (preferenceData.hasUpdatedValues) {
+              channelProperties.push({
+                Name: 'preferenceUpdatedDate',
+                Value: new Date()
+              })
+
+              for (const pre in preferenceData) {
+                channelProperties.push({
+                  Name: pre,
+                  Value: preferenceData[pre]
+                })
+              }
+            }
+          }
+
+
+
+          if (Object.prototype.hasOwnProperty.call($event[channel], 'subscriptions')) {
+            const subscriptionData = $event[channel]['subscriptions'].subscriptions;
+
+            if ($event[channel]['subscriptions']['hasUpdatedValues']) {
+              channelProperties.push({
+                Name: 'subscriptionUpdatedDate',
+                Value: new Date()
+              })
+
+              let subscriptions = ''
+              for (const sub of subscriptionData) {
+                subscriptions += `${sub}|`
+              }
+
+              subscriptions = subscriptions.substring(0, subscriptions.length - 1)
+              channelProperties.push({
+                Name: 'subscriptions',
+                Value: subscriptions
+              })
+            }
+          }
+
+
+          if (
+            $event[channel]['subscriptions']['hasUpdatedValues'] ||
+            $event[channel]['preferences']['hasUpdatedValues'] ||
+            $event['profile']['hasUpdatedValues']
+          ) {
+            channelProperties.push(
+              {
+                Name: 'subscriberId',
+                Value: this.subscriber.subscriberId
+              },
+              {
+                Name: 'emailAddress',
+                Value: this.subscriber.emailAddress
+              },
+              {
+                Name: 'channel',
+                Value: channel
+              })
+          }
+
+          postData[channel] = channelProperties
+          channelProperties = new Array();
         }
 
-        postData.updatedInfo.push({
-          Name: 'subscriberId',
-          Value: this.subscriber.subscriberId
-        },
-        {
-          Name: 'emailAddress',
-          Value: this.subscriber.emailAddress
-        },
-        {
-          Name: 'channel',
-          Value: this.channelSelection
-        })
 
+        // const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
+        //   postData
+        // })
 
-        const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
-          postData
-        })
-        
-        console.log(submitRequest)
+        console.log(postData)
 
       } catch (err) {
         console.log(err)
@@ -125,11 +175,11 @@ new Vue({
     }
   },
   computed: {
-    apiBaseURL(){
+    apiBaseURL() {
       return `${this.applicationConfiguration.apiBaseURL}?action=`
     },
-    branding(){
-      if(this.applicationConfiguration.branding.supportDarkMode && this.darkMode){
+    branding() {
+      if (this.applicationConfiguration.branding.supportDarkMode && this.darkMode) {
         return this.applicationConfiguration.branding.dark
       }
 

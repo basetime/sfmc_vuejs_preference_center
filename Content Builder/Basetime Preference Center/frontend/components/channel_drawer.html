@@ -4,19 +4,16 @@ What is this component?
 Vue.component('channel-drawer', {
   props: {
     preferenceOptions: Object,
-    branding: Object
+    branding: Object,
+    channels: Array
   },
   methods: {
-    getPreferenceChannels: function (preferenceOptions) {
-      return Object.keys(preferenceOptions['channels'])
-    },
     getChannelIcon: function (channel, preferenceOptions) {
       return this.preferenceOptions['channels'][channel]['icon']
     }
   },
   data() {
     return {
-      channels: this.getPreferenceChannels(preferenceOptions),
       right: null,
     }
   },

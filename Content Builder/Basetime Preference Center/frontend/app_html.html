@@ -7,11 +7,11 @@
     </v-row>
     <v-row v-if="authorized">
       <v-col cols="2">
-        <channel-drawer @update-channel-selection="onUpdateChannelSelection" :branding="branding"
+        <channel-drawer @update-channel-selection="onUpdateChannelSelection" :channels="channels" :branding="branding"
           :preference-options="preferenceOptions"></channel-drawer>
       </v-col>
       <v-col cols="10">
-        <preference-form @submit-preference-form="onSubmitPreferenceForm" :subscriber-preferences="subscriber.preferences" :form-submitting="formSubmitting"
+        <preference-form @submit-preference-form="onSubmitPreferenceForm" :channels="channels" :subscriber-preferences="subscriber.preferences" :form-submitting="formSubmitting"
           :branding="branding" :preference-options="preferenceOptions" :channel-selection="channelSelection">
         </preference-form>
       </v-col>
