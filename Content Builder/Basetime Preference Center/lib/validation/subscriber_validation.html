@@ -9,14 +9,15 @@
   Platform.Load("core", "1.1.1");
 
   var subscriberKey = Stringify(Variable.GetValue("@subscriberkey"));
-  var subscriberId = Variable.GetValue("@subscriberid");
   var emailAddress = Stringify(Variable.GetValue("@emailAddress"));
+  var subscriberId = Variable.GetValue("@subscriberid");
   var jobId = Variable.GetValue("@jobid");
 
   var authorized = 0;
-  if(typeof subscriberId !== 'undefined' && (typeof jobId !== 'undefined' && jobId !== '0')) {
+  if(subscriberId !== 0 && jobId !== 0) {
     authorized = 1;
   }
 
   authorized = 1
+
 </script>

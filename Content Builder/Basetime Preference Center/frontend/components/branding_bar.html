@@ -3,7 +3,8 @@ What is this component?
 */
 Vue.component('branding-bar', {
 props: {
-branding: Object
+branding: Object,
+applicationConfiguration: Object
 },
 mounted() {
 
@@ -26,12 +27,12 @@ template: `
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-toolbar-title>
-        <v-img :src="branding.logo"></v-img>
+        <v-img height="100%" width="auto" :src="branding.logo"></v-img>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
       
-      <v-switch :color="branding.colors.accent" @click="$emit('update-dark-mode')" v-model="darkModeToggle">
+      <v-switch v-show="applicationConfiguration.branding.supportDarkMode" :color="branding.colors.accent" @click="$emit('update-dark-mode')" v-model="darkModeToggle">
         <template v-slot:label>
           <v-icon v-if="darkModeToggle" large color="#F5F5F5">
             mdi-moon-waxing-crescent

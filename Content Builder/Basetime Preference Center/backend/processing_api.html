@@ -14,10 +14,17 @@
   var action = Platform.Request.GetQueryStringParameter('action');
   var payload = Platform.Request.GetQueryStringParameter('payload');
 
-  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
+  var brand = Platform.Request.GetQueryStringParameter('brand');
+  var locale = Platform.Request.GetQueryStringParameter('locale');
+
+  var configPath = 'Content Builder\\Basetime Preference Center\\configurations' + '\\ ' + brand + '\\ ' + locale
+  var applicationConfigurationPath = configPath + '\\app_configuration'
+  applicationConfigurationPath = applicationConfigurationPath.replace(/(?<=\\)\ /g, '')
+
+  var applicationConfiguration = Platform.Function.ContentBlockByName(applicationConfigurationPath)
   var applicationConfigurationJSON = Platform.Function.ParseJSON(applicationConfiguration)
   var map = applicationConfigurationJSON.map;
-  
+
   var preferenceCenterDataExtensionExternalKey = map.data_extension.preferenceCenterExternalKey;
 
   Platform.Function.ContentBlockByName(map.content_block.ssjs.wsProxy)
@@ -38,7 +45,19 @@
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
-    case 'submitPreferenceForm':
+    case 'submitPreferenceForm': 
+      var updateData = postJSON.postData;
+      var payload = [];
+
+      for (var u = 0; u < updateData.length; u++) {
+        var update = updateData[u];
+
+        payload.push({
+          CustomerKey: preferenceCenterDataExtensionExternalKey,
+          Properties: update
+        })
+      }
+
       //update item
       reqConfig = {
         soapObjName: "DataExtensionObject",
@@ -48,15 +67,11 @@
             SaveAction: "UpdateAdd"
           }]
         },
-        payload: {
-          CustomerKey: preferenceCenterDataExtensionExternalKey,
-          Properties: postJSON.postData.updatedInfo
-        }
+        payload: payload
       }
 
       var updatePreferences = fns.wsProxy.update(reqConfig);
       res = updatePreferences;
-
       break;
 
 
@@ -75,7 +90,7 @@
 
       var preferenceRequest = fns.utils.getDERecords(reqConfig, fns);
 
-      if(preferenceRequest.Status === 'OK'){
+      if (preferenceRequest.Status === 'OK') {
         preferences = fns.utils.formatResult(preferenceRequest.Results, 'Properties')
         res = {
           Status: 'OK',

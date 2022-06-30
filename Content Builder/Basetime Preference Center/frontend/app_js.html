@@ -11,6 +11,8 @@ new Vue({
       preferenceOptions,
       channelSelection,
       formSubmitting: false,
+      brand: brand,
+      locale: locale,
       subscriber: {
         subscriberId: subscriberId,
         subscriberKey: subscriberKey,
@@ -67,7 +69,7 @@ new Vue({
     async onSubmitPreferenceForm($event) {
       try {
         const channels = this.channels;
-        const postData = {};
+        const postData = [];
 
         console.log($event)
 
@@ -92,6 +94,7 @@ new Vue({
                 })
               }
             }
+
           }
 
 
@@ -111,21 +114,21 @@ new Vue({
                 })
               }
             }
+
           }
 
-
-
           if (Object.prototype.hasOwnProperty.call($event[channel], 'subscriptions')) {
-            const subscriptionData = $event[channel]['subscriptions'].subscriptions;
+            const subscriptionObject = $event[channel]['subscriptions'];
+            const subscriptionsData = subscriptionObject.subscriptions;
 
-            if ($event[channel]['subscriptions']['hasUpdatedValues']) {
+            if (subscriptionObject.hasUpdatedValues) {
               channelProperties.push({
-                Name: 'subscriptionUpdatedDate',
+                Name: 'subscriptionsUpdatedDate',
                 Value: new Date()
               })
 
               let subscriptions = ''
-              for (const sub of subscriptionData) {
+              for (const sub of subscriptionsData) {
                 subscriptions += `${sub}|`
               }
 
@@ -136,7 +139,6 @@ new Vue({
               })
             }
           }
-
 
           if (
             $event[channel]['subscriptions']['hasUpdatedValues'] ||
@@ -158,16 +160,23 @@ new Vue({
               })
           }
 
-          postData[channel] = channelProperties
+          let propertyArray = channelProperties.map(prop => prop.Name !== 'hasUpdatedValues' && prop)
+
+          if (propertyArray.length) {
+            postData.push(propertyArray.filter(Boolean))
+          }
+
           channelProperties = new Array();
         }
 
+        const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
+          postData
+        })
 
-        // const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
-        //   postData
-        // })
-
-        console.log(postData)
+        if(submitRequest.data.Status === 'OK'){
+          this.getExistingPreferences();
+        }
+  
 
       } catch (err) {
         console.log(err)
@@ -176,7 +185,7 @@ new Vue({
   },
   computed: {
     apiBaseURL() {
-      return `${this.applicationConfiguration.apiBaseURL}?action=`
+      return `${this.applicationConfiguration.apiBaseURL}?brand=${this.brand}&locale=${this.locale}&action=`
     },
     branding() {
       if (this.applicationConfiguration.branding.supportDarkMode && this.darkMode) {

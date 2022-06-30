@@ -18,7 +18,9 @@ Vue.component('channel-drawer', {
     }
   },
   template: `
-  <div>
+  <div 
+    v-if="channels.length > 1"
+  >
     <v-navigation-drawer 
       permanent
       max-height="100vh"

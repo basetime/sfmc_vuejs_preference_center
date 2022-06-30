@@ -2,7 +2,7 @@
   <v-main>
     <v-row overflow="hidden">
       <v-col cols="12">
-        <branding-bar @update-dark-mode="onUpdateDarkMode" :dark-mode="darkMode" :branding="branding"></branding-bar>
+        <branding-bar @update-dark-mode="onUpdateDarkMode" :application-configuration="applicationConfiguration" :dark-mode="darkMode" :branding="branding"></branding-bar>
       </v-col>
     </v-row>
     <v-row v-if="authorized">
@@ -17,7 +17,7 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <unauthorized-user :branding="branding" :unauthorized="applicationConfiguration.unauthorized">
+      <unauthorized-user :branding="branding" :unauthorized="preferenceOptions.unauthorized">
       </unauthorized-user>
     </v-row>
   </v-main>

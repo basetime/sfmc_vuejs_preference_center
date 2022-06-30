@@ -4,11 +4,21 @@
 <script runat="server">
   Platform.Load("core", "1.1.1");
 
-  var applicationConfiguration = Platform.Function.ContentBlockByName('Content Builder\\Basetime Preference Center\\configurations\\app_configuration')
+  var brand = Platform.Request.GetQueryStringParameter('brand')
+  var locale = Platform.Request.GetQueryStringParameter('locale')
+
+  var configPath = 'Content Builder\\Basetime Preference Center\\configurations' + '\\ ' + brand + '\\ ' + locale
+  var applicationConfigurationPath = configPath + '\\app_configuration'
+  var preferenceOptionsPath = configPath + '\\preference_options'
+
+  applicationConfigurationPath = applicationConfigurationPath.replace(/(?<=\\)\ /g, '')
+  preferenceOptionsPath = preferenceOptionsPath.replace(/(?<=\\)\ /g, '')
+
+  var applicationConfiguration = Platform.Function.ContentBlockByName(applicationConfigurationPath)
+  var preferenceOptions = Platform.Function.ContentBlockByName(preferenceOptionsPath)
   var applicationConfigurationJSON = Platform.Function.ParseJSON(applicationConfiguration)
   var map = applicationConfigurationJSON.map;
 
-  var preferenceOptions = Platform.Function.ContentBlockByName(map.content_block.preference_options)
   var channelDrawer = Platform.Function.ContentBlockByName(map.content_block.channel_drawer)
   var preferenceForm = Platform.Function.ContentBlockByName(map.content_block.preference_form)
   var unauthorizedUser = Platform.Function.ContentBlockByName(map.content_block.unauthorized_user)
@@ -38,6 +48,8 @@
   const emailAddress = <ctrl:var name=emailAddress />
   const subscriberKey = <ctrl:var name=subscriberKey />
   const jobId = <ctrl:var name=jobId />
+  const brand = "<ctrl:var name=brand />"
+  const locale = "<ctrl:var name=locale />"
 
   <ctrl:var name=appJS />
   <ctrl:var name=channelDrawer />

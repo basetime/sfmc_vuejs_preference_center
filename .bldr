@@ -2,103 +2,103 @@
   {
     "id": 106442,
     "context": "contentBuilder",
-    "bldrId": "d448acbc-21a5-419f-b81f-47f4178f8242",
+    "bldrId": "28b28ba6-d2e6-49e0-96ba-48cd49bfa00b",
     "folderPath": "Content Builder/Basetime Preference Center/backend/functions.html"
   },
   {
     "id": 106443,
     "context": "contentBuilder",
-    "bldrId": "fc4722f7-533a-4a19-a952-d4846712091f",
+    "bldrId": "86ee5953-5eab-484b-b585-9bddabfd26f0",
     "folderPath": "Content Builder/Basetime Preference Center/backend/processing_api.html"
-  },
-  {
-    "id": 106444,
-    "context": "contentBuilder",
-    "bldrId": "110e71f3-92da-4784-b469-b9244f6d687f",
-    "folderPath": "Content Builder/Basetime Preference Center/configurations/app_configuration.html"
   },
   {
     "id": 106445,
     "context": "contentBuilder",
-    "bldrId": "f63b1a9c-fbd9-4ec3-bd6e-67a62e728578",
+    "bldrId": "6fc226e0-4c78-4c42-a24d-e2615c306a41",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/app_html.html"
   },
   {
     "id": 106446,
     "context": "contentBuilder",
-    "bldrId": "5361e419-f1a7-405d-afe9-8a0f23de02ff",
+    "bldrId": "6703c08e-bddd-4b17-b55f-977e499d1a4b",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/app_js.html"
   },
   {
     "id": 106447,
     "context": "contentBuilder",
-    "bldrId": "3115abb9-26d9-42a5-b2c1-de7f13b9d433",
+    "bldrId": "93f3f5f5-926b-439f-8860-ea74076de070",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/components/_component_imports.html"
   },
   {
     "id": 106793,
     "context": "contentBuilder",
-    "bldrId": "2fd2d17b-bb6f-4dd6-9e0a-971712e8798c",
+    "bldrId": "898ad7fe-d0e6-4e67-9dbb-4924484eea28",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/components/channel_drawer.html"
-  },
-  {
-    "id": 106843,
-    "context": "contentBuilder",
-    "bldrId": "b39f9633-e124-412b-98f2-b193a43fe779",
-    "folderPath": "Content Builder/Basetime Preference Center/configurations/preference_options.html"
   },
   {
     "id": 106938,
     "context": "contentBuilder",
-    "bldrId": "fdd2860b-053b-4b45-aa8a-ca80582adc28",
+    "bldrId": "7b6baf70-f69f-4a01-afd2-67cd81bc332c",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/components/branding_bar.html"
   },
   {
     "id": 107200,
     "context": "contentBuilder",
-    "bldrId": "a404ebbf-2731-4d8c-b708-8478f8c93f06",
+    "bldrId": "ffdc0793-808e-430b-92dd-3046058b26db",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/components/preference_form.html"
   },
   {
     "id": 107340,
     "context": "contentBuilder",
-    "bldrId": "0705cd58-21fa-43e2-8771-87170fba0b95",
+    "bldrId": "8111eb7f-60e2-45f1-a170-d813d92867ff",
     "folderPath": "Content Builder/Basetime Preference Center/frontend/styles/submit_button_animation.html"
   },
   {
     "id": 107374,
     "context": "contentBuilder",
-    "bldrId": "ba60b073-8ca0-45a3-8346-8d18d6513110",
+    "bldrId": "b2ed6a8e-c811-47a7-8bf8-350dc730e81d",
     "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs/wsProxy.html"
   },
   {
-    "id": 106368,
-    "context": "contentBuilder",
-    "bldrId": "982afe57-b829-4ae8-a303-5fa7da6b4386",
-    "folderPath": "Content Builder/index.html"
-  },
-  {
-    "id": 106396,
-    "context": "contentBuilder",
-    "bldrId": "a9712a31-6447-4b8f-9847-41a4094cd62a",
-    "folderPath": "Content Builder/backend_api.html"
-  },
-  {
-    "folderPath": "Content Builder/Basetime Preference Center/lib/validation",
-    "bldrId": "b59c080c-e3e3-4870-ada3-bb09d656fcee",
     "id": 107746,
-    "context": "contentBuilder"
+    "context": "contentBuilder",
+    "bldrId": "c6c91d78-0e7c-4e64-8bed-fa2bc4610af4",
+    "folderPath": "Content Builder/Basetime Preference Center/lib/validation/subscriber_validation.html"
   },
   {
-    "folderPath": "Content Builder/Basetime Preference Center/frontend/components",
-    "bldrId": "0129632d-e157-4f1d-92f7-373b2e0ec57a",
     "id": 107911,
-    "context": "contentBuilder"
+    "context": "contentBuilder",
+    "bldrId": "cec8d97a-f694-4906-bd94-6a8891310a52",
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/unauthorized_user.html"
   },
   {
-    "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs",
-    "bldrId": "091bd822-cd64-45de-b56f-39b59d4cff2d",
     "id": 107940,
-    "context": "contentBuilder"
+    "context": "contentBuilder",
+    "bldrId": "69f852b0-e5c0-419d-ba07-3ace0496f41e",
+    "folderPath": "Content Builder/Basetime Preference Center/lib/ssjs/utils.html"
+  },
+  {
+    "id": 111064,
+    "context": "contentBuilder",
+    "bldrId": "5bf59e5c-ea10-47c6-8eaa-8dd5eee58b68",
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/basetime/en-us/app_configuration.html"
+  },
+  {
+    "id": 111065,
+    "context": "contentBuilder",
+    "bldrId": "ccae12fb-51b8-4675-95d8-0f922667887e",
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/basetime/en-us/preference_options.html"
+  },
+  {
+    "id": 111108,
+    "context": "contentBuilder",
+    "bldrId": "b04a04dc-89ed-41fd-b680-8af940be5902",
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/basetime/es-us/app_configuration.html"
+  },
+  {
+    "id": 111109,
+    "context": "contentBuilder",
+    "bldrId": "56532c14-0d3f-4a53-a2a0-f776b8f42195",
+    "folderPath": "Content Builder/Basetime Preference Center/configurations/basetime/es-us/preference_options.html"
   }
 ]

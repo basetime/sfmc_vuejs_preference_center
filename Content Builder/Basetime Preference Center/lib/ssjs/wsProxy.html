@@ -49,8 +49,7 @@
       if (!obj) { return 'SOAP object is required'; }
       if (!payload) { return 'payload is required'; }
 
-      // var batch = utils.isArray(payload);
-      var batch = false;
+      var batch = fns.utils.isArray(payload)
 
       if (batch) {
         var res = prox.updateBatch(obj, payload, options);
