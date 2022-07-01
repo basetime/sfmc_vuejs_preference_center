@@ -5,7 +5,7 @@
         <branding-bar @update-dark-mode="onUpdateDarkMode" :application-configuration="applicationConfiguration" :dark-mode="darkMode" :branding="branding"></branding-bar>
       </v-col>
     </v-row>
-    <v-row v-if="authorized">
+    <v-row v-show="authorized">
       <v-col cols="2">
         <channel-drawer @update-channel-selection="onUpdateChannelSelection" :channels="channels" :branding="branding"
           :preference-options="preferenceOptions"></channel-drawer>
@@ -16,9 +16,13 @@
         </preference-form>
       </v-col>
     </v-row>
-    <v-row v-else>
+    <v-row v-show="!authorized">
       <unauthorized-user :branding="branding" :unauthorized="preferenceOptions.unauthorized">
       </unauthorized-user>
+    </v-row>
+    <v-row>
+      <legal :branding="branding" :legal="preferenceOptions.legal">
+      </legal>
     </v-row>
   </v-main>
 </v-app>

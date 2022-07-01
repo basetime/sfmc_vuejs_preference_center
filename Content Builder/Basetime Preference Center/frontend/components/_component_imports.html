@@ -23,6 +23,7 @@
   var preferenceForm = Platform.Function.ContentBlockByName(map.content_block.preference_form)
   var unauthorizedUser = Platform.Function.ContentBlockByName(map.content_block.unauthorized_user)
   var brandingBar = Platform.Function.ContentBlockByName(map.content_block.branding_bar)
+  var legal = Platform.Function.ContentBlockByName(map.content_block.legal)
   var appJS = Platform.Function.ContentBlockByName(map.content_block.app_js)
 
 </script>
@@ -52,9 +53,10 @@
   const locale = "<ctrl:var name=locale />"
 
   <ctrl:var name=appJS />
+  <ctrl:var name=brandingBar />
   <ctrl:var name=channelDrawer />
   <ctrl:var name=preferenceForm />
   <ctrl:var name=unauthorizedUser />
-  <ctrl:var name=brandingBar />
+  <ctrl:var name=legal />
 
   %%=Concat('</sc','rip','t>')=%%

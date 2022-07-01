@@ -1,0 +1,38 @@
+/*
+What is this component?
+*/
+Vue.component('legal', {
+props: {
+legal: Object,
+branding: Object
+},
+mounted() {
+
+},
+data() {
+return {
+
+}
+},
+watch: {
+
+},
+methods: {
+
+},
+template: `
+<v-row
+  class="mt-5"
+>
+  <v-col cols="10" class="flex text-center mx-auto">
+    <v-divider class="my-4"></v-divider>
+    <v-row justify="space-around">
+      <v-col cols="8" class="text-caption">
+        <span v-html="legal.copy"></span>
+      </v-col>
+    </v-row>
+
+  </v-col>
+</v-row>
+`
+})

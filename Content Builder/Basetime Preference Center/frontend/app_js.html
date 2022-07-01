@@ -174,12 +174,14 @@ new Vue({
         })
 
         if(submitRequest.data.Status === 'OK'){
+          Vue.$toast.success(`Thank you for updating your preferences!`)
           this.getExistingPreferences();
         }
   
 
       } catch (err) {
         console.log(err)
+        Vue.$toast.success(`There was an error: [${err.message}]`)
       }
     }
   },
