@@ -35,9 +35,8 @@ If you need to update folder names do so by doing a find/replace and it is recom
   set @locale = Lookup('Subscribers Data Extension', 'locale', 'subscriberId', @subscriberId)
 ]%%
 
-... html ...
 
-<a alias="ThisAlias" conversion="false" href="%%=RedirectTo(CloudPagesURL(####, 'brand', @brand, 'locale', @locale))=%%" title="MyPage">Click to update preferences.</a>
+<a alias="preference_center_link" conversion="false" href="%%=RedirectTo(CloudPagesURL(####, 'brand', @brand, 'locale', @locale))=%%" title="Preference Center">Click to update preferences.</a>
 ```
 <br>
 
