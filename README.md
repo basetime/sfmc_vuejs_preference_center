@@ -17,7 +17,7 @@ This project has been packaged with the BLDR-SFMC project and can be installed u
 `bldr deploy`
 
 <br>
-∏
+
 **Installation Notes**
 
 If you need to update folder names do so by doing a find/replace and it is recommended that you spot check the change to ensure no changes will result in broken references.
@@ -27,7 +27,18 @@ If you need to update folder names do so by doing a find/replace and it is recom
 # Configuration
 
 
+# Link in Email
 
+```html
+%%[
+  set @brand = 'basetime'
+  set @locale = Lookup('Subscribers Data Extension', 'locale', 'subscriberId', @subscriberId)
+]%%
+
+... html ...
+
+<a alias="ThisAlias" conversion="false" href="%%=RedirectTo(CloudPagesURL(####, 'brand', @brand, 'locale', @locale))=%%" title="MyPage">Click to update preferences.</a>
+```
 <br>
 
 # Technology Used

@@ -100,5 +100,23 @@
     "context": "contentBuilder",
     "bldrId": "56532c14-0d3f-4a53-a2a0-f776b8f42195",
     "folderPath": "Content Builder/Basetime Preference Center/configurations/basetime/es-us/preference_options.html"
+  },
+  {
+    "id": 106368,
+    "context": "contentBuilder",
+    "bldrId": "67c84378-f0f6-428c-9f22-8a21cda6dcf7",
+    "folderPath": "Content Builder/index.html"
+  },
+  {
+    "id": 106396,
+    "context": "contentBuilder",
+    "bldrId": "b73bf169-af9e-4e6c-8243-26d150979b14",
+    "folderPath": "Content Builder/backend_api.html"
+  },
+  {
+    "folderPath": "Content Builder/Basetime Preference Center/frontend/components/legal.html",
+    "bldrId": "2ca8d070-29a5-4922-a2fb-165fa21f1b34",
+    "id": 111324,
+    "context": "contentBuilder"
   }
 ]
