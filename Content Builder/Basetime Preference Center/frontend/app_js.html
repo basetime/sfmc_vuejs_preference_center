@@ -46,8 +46,11 @@ new Vue({
     async getExistingPreferences() {
       try {
         const subscriberId = this.subscriber.subscriberId;
+        const emailAddress = this.subscriber.emailAddress;
         const submitRequest = await axios.post(`${this.apiBaseURL}getCurrentPreferences`, {
-          subscriberId
+          subscriberId,
+          channels: this.channels,
+          emailAddress
         })
 
         console.log(submitRequest)

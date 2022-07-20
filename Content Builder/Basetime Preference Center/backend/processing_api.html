@@ -42,7 +42,7 @@
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
-    case 'submitPreferenceForm': 
+    case 'submitPreferenceForm':
       var updateData = postJSON.postData;
       var payload = [];
 
@@ -74,6 +74,7 @@
 
     case 'getCurrentPreferences':
       var preferences;
+      var preferenceRequest;
 
       reqConfig = {
         dataExtensionKey: preferenceCenterDataExtensionExternalKey,
@@ -85,10 +86,55 @@
         }
       };
 
-      var preferenceRequest = fns.utils.getDERecords(reqConfig, fns);
+      preferenceRequest = fns.utils.getDERecords(reqConfig, fns);
 
       if (preferenceRequest.Status === 'OK') {
+        // Add Record if it does not exist
+        if (preferenceRequest.Results.length === 0) {
+          var channels = postJSON.channels;
+          var payload = [];
+          var updateConfig;
+
+          for (var c = 0; c < channels.length; c++) {
+            var channel = channels[c];
+
+            payload.push({
+              CustomerKey: preferenceCenterDataExtensionExternalKey,
+              Properties: [
+                {
+                  Name: 'subscriberId',
+                  Value: postJSON.subscriberId
+                },
+                {
+                  Name: 'emailAddress',
+                  Value: postJSON.emailAddress
+                },
+                {
+                  Name: 'channel',
+                  Value: channel
+                }
+              ]
+            })
+          }
+
+          //update item
+          updateConfig = {
+            soapObjName: "DataExtensionObject",
+            options: {
+              SaveOptions: [{
+                PropertyName: "*",
+                SaveAction: "UpdateAdd"
+              }]
+            },
+            payload: payload
+          }
+
+          var addRecords = fns.wsProxy.update(updateConfig);
+          preferenceRequest = fns.utils.getDERecords(reqConfig, fns)
+        }
+
         preferences = fns.utils.formatResult(preferenceRequest.Results, 'Properties')
+
         res = {
           Status: 'OK',
           Results: preferences

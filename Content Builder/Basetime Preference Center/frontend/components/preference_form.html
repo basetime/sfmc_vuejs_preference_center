@@ -13,7 +13,6 @@ Vue.component('preference-form', {
     subscriberPreferences: Array
   },
   beforeMount() {
-
     this.setFormInputSchema();
     this.setProfileFormSchema();
     this.setPreferenceFormSchema();
@@ -82,7 +81,8 @@ Vue.component('preference-form', {
 
         for (const pro in profileData) {
           let inputObject = profileData[pro];
-          this.formInputs['profile'][inputObject.name] = this.channelPreferences[inputObject.name];
+        
+          this.formInputs['profile'][inputObject.name] = this.channelPreferences[inputObject.name] ? this.channelPreferences[inputObject.name] : '';
 
           profileSchema.push(inputObject)
         }
@@ -176,7 +176,9 @@ Vue.component('preference-form', {
 
     },
     setChannelPreferences(channel) {
-      return this.subscriberPreferences.find((pref) => pref.channel === channel)
+       if(this.subscriberPreferences.length) {
+        return this.subscriberPreferences.find((pref) => pref.channel === channel)
+       }
     }
   },
   watch: {
