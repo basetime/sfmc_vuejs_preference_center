@@ -42,13 +42,73 @@
   //Run specific set of code/functions based on the 'action' parameter
   //After code is finished, the 'response' function returns the output and 'break' stops the processing
   switch (action) {
+    case 'testUnsub':
+      var postJSON = {
+        "postData": [
+          [
+            {
+              "Name": "preferenceUpdatedDate",
+              "Value": "2022-07-20T21:17:46.209Z"
+            },
+            {
+              "Name": "preference",
+              "Value": "unsubscribe"
+            },
+            {
+              "Name": "subscriberId",
+              "Value": 484239505
+            },
+            {
+              "Name": "emailAddress",
+              "Value": "tony.zupancic@avagate.com"
+            },
+            {
+              "Name": "channel",
+              "Value": "email"
+            }
+          ]
+        ],
+        "logUnsubEvent": {
+          "unsubscribe": true,
+          "emailAddress": "tony.zupancic@avagate.com",
+          "subscriberKey": "tony.zupancic@avagate.com",
+          "subscriberId": 484239505,
+          "jobId": 0
+        }
+      }
+
+      var unsubEvent;
+      var logUnsubEvent = postJSON.logUnsubEvent;
+      var allSubscribersListID = fns.utils.getAllSubscribersListID(fns)
+      var subscriberCurrentStatus = fns.utils.getSubscriberStatus(logUnsubEvent.subscriberId, fns)
+
+      if (applicationConfigurationJSON.action_toggles.unsubscribe === true) {
+        logUnsubEvent.listId = allSubscribersListID;
+        unsubEvent = fns.utils.toggleUnsubscribe(logUnsubEvent, subscriberCurrentStatus, fns)
+      }
+
+      res = {
+        allSubscribersListID: allSubscribersListID,
+        subscriberCurrentStatus: subscriberCurrentStatus,
+        logUnsubEvent: logUnsubEvent,
+        unsubEvent: unsubEvent
+      }
+
+      break;
     case 'submitPreferenceForm':
       var updateData = postJSON.postData;
+      var logUnsubEvent = postJSON.logUnsubEvent || null;
+      var unsubscribe = logUnsubEvent.unsubscribe;
+      var allSubscribersListID = fns.utils.getAllSubscribersListID(fns)
+      var subscriberCurrentStatus = fns.utils.getSubscriberStatus(logUnsubEvent.subscriberId, fns)
+
+      // add All Subscribers ListID to UnsubEvent Object
+      logUnsubEvent.listId = allSubscribersListID;
+
       var payload = [];
 
       for (var u = 0; u < updateData.length; u++) {
         var update = updateData[u];
-
         payload.push({
           CustomerKey: preferenceCenterDataExtensionExternalKey,
           Properties: update
@@ -66,8 +126,13 @@
         },
         payload: payload
       }
-
       var updatePreferences = fns.wsProxy.update(reqConfig);
+
+      var unsubEvent;
+      if (applicationConfigurationJSON.action_toggles.unsubscribe === true) {
+        unsubEvent = fns.utils.toggleUnsubscribe(logUnsubEvent, subscriberCurrentStatus, fns)
+      }
+
       res = updatePreferences;
       break;
 
@@ -147,6 +212,5 @@
   };
 
   fns.utils.response(res)
-
 
 </script>

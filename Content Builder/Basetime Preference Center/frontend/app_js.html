@@ -74,10 +74,9 @@ new Vue({
         const channels = this.channels;
         const postData = [];
 
-        console.log($event)
-
         for (const c in channels) {
           const channel = channels[c];
+          let unsubscribe = false;
           let channelProperties = new Array();
 
           if (Object.prototype.hasOwnProperty.call($event, 'profile')) {
@@ -97,7 +96,6 @@ new Vue({
                 })
               }
             }
-
           }
 
 
@@ -111,9 +109,11 @@ new Vue({
               })
 
               for (const pre in preferenceData) {
+                let preferenceValue = preferenceData[pre]
+    
                 channelProperties.push({
                   Name: pre,
-                  Value: preferenceData[pre]
+                  Value: preferenceValue
                 })
               }
             }
@@ -140,6 +140,7 @@ new Vue({
                 Name: 'subscriptions',
                 Value: subscriptions
               })
+
             }
           }
 
@@ -172,8 +173,33 @@ new Vue({
           channelProperties = new Array();
         }
 
+        let unsubscribe = false;
+
+        if(postData.length === 1){
+          const isEmailChannel = postData[0].filter((obj) => obj.Value === 'email')
+          if(isEmailChannel){
+            let preference = postData[0].filter((obj) => obj.Name === 'preference')
+            let subscriptions = postData[0].filter((obj) => obj.Name === 'subscriptions')
+
+            preference = preference.length && preference[0].Value.toLowerCase();
+            subscriptions = subscriptions.length && subscriptions[0].Value.toLowerCase();
+
+            if(preference && preference.includes('unsubscribe') || subscriptions && subscriptions.includes('unsubscribe')){
+              unsubscribe = true;
+            }
+          }
+        }
+
+
         const submitRequest = await axios.post(`${this.apiBaseURL}submitPreferenceForm`, {
-          postData
+          postData,
+          logUnsubEvent: {
+            unsubscribe,
+            emailAddress,
+            subscriberKey,
+            subscriberId,
+            jobId
+          }
         })
 
         if(submitRequest.data.Status === 'OK'){

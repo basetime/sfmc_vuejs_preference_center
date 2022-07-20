@@ -177,6 +177,96 @@
     };
 
 
+    fn.getSubscriberStatus = function (subscriberId, fns) {
+      try {
+        var subscriberStatusConfig = {
+          soapObjName: 'Subscriber',
+          cols: ['Status'],
+          filter: {
+            Property: 'ID',
+            SimpleOperator: 'equals',
+            Value: subscriberId
+          }
+        }
+
+        var subscriber = fns.wsProxy.retrieve(subscriberStatusConfig)
+
+        if(subscriber.Status === 'OK'){
+          return subscriber.Results[0].Status
+        }
+
+      } catch (err) {
+        return err
+      }
+    }
+
+
+    fn.getAllSubscribersListID = function (fns) {
+      try {
+        var allsubsConfig = {
+          soapObjName: 'List',
+          cols: ['ID'],
+          filter: {
+            Property: 'ListName',
+            SimpleOperator: 'equals',
+            Value: 'All Subscribers'
+          }
+        }
+
+        var allSubsReq = fns.wsProxy.retrieve(allsubsConfig)
+
+        if (allSubsReq.Status === 'OK') {
+          return allSubsReq.Results[0].ID
+        }
+
+        return 0
+
+      } catch (err) {
+        return err
+      }
+    }
+
+
+    fn.toggleUnsubscribe = function (unsubEvent, currentStatus, fns) {
+      try {
+        if (unsubEvent.unsubscribe === true && currentStatus === 'Active') {
+          var prox = new Script.Util.WSProxy();
+          var props = [
+            { Name: "SubscriberKey", Value: unsubEvent.subscriberKey },
+            { Name: "EmailAddress", Value: unsubEvent.emailAddress },
+            { Name: "JobID", Value: unsubEvent.jobId },
+            { Name: "ListID", Value: unsubEvent.listId },
+            { Name: "BatchID", Value: 0 }
+          ];
+
+          return prox.execute(props, "LogUnsubEvent");
+          
+        } else if(unsubEvent.unsubscribe === false && currentStatus !== 'Active'){
+          var updateSubscriberStatusConfig = {
+            soapObjName: 'Subscriber',
+            options: {
+              SaveOptions: [{
+                PropertyName: "*",
+                SaveAction: "UpdateAdd"
+              }]
+            },
+            payload: {
+              SubscriberKey: unsubEvent.subscriberKey,
+              Status: 'Active',
+              Lists: [{
+                ID: unsubEvent.listId
+              }]
+            }
+          }
+
+          return fns.wsProxy.update(updateSubscriberStatusConfig)
+        }
+
+      } catch (err) {
+        return err
+      }
+    }
+
     return fn
   }
 
